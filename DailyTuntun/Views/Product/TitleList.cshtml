@@ -1,0 +1,196 @@
+﻿@model IEnumerable<DailyTuntun.Models.ProductTitleModel>
+@{
+    ViewData["Title"] = "TitleList";
+
+    int contentGroupId = (int)ViewData["ContentGroupId"];
+    string contentGroupName = (string)ViewData["ContentGroupName"];
+    string contentGroupImageURL = (string)ViewData["ContentGroupImageURL"];
+    string comment = (string)ViewData["Comment"];
+
+    int productKindId = (int)ViewData["ProductKindID"];
+    bool authYn = (bool)ViewData["AuthYn"];
+
+
+    string bgPath = "/assets/img/sub/bg_4.png";
+    string bgComment = "출발! 노래와 함께하는 신나는 영어여행";
+
+    if (contentGroupId == 1)
+    {
+        bgPath = "/assets/img/sub/bg_4.png";
+    }
+    else if (contentGroupId == 2)
+    {
+        bgPath = "/assets/img/sub/bg_5.png";
+    }
+    else if (contentGroupId == 3)
+    {
+        bgPath = "/assets/img/sub/bg_6.png";
+    }
+    else if (contentGroupId == 4)
+    {
+        bgPath = "/assets/img/sub/bg_7.png";
+    }
+    else if (contentGroupId == 5)
+    {
+        bgPath = "/assets/img/sub/bg_special.png";
+    }
+
+    if (contentGroupId == 1)
+    {
+        bgComment = "규리와 함께 슈퍼히어로가 되어 문제를 해결하며 즐겁게 발화하는"; 
+    }
+
+    string colSize = "col-md-3 col-sm-6";
+
+    int memberId = 0;
+
+    if (User.Identity.IsAuthenticated)
+    {
+        memberId = int.Parse(User.FindFirst("MemberID").Value);
+    }
+
+}
+
+<div class="page-header page-header-small" style="background-image: url('@bgPath');background-position: center 5%;">
+    @*<div class="filter"></div>*@
+    <div class="content-center">
+        <div class="container">
+            <div class="motto">
+                <div class="description">
+                    <img src="@contentGroupImageURL" />
+                </div>
+                <br />
+                <div class="description text-dark-berry"><b>@bgComment</b></div>
+                <h5 class="description text-dark-berry">@comment</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="wrapper">
+        <!-- section -->
+        <div class="section section-blog">
+            <div class="container">
+                <div class="row">
+
+                    @if (Model.Count() == 0)
+                    {
+                        <br /><br />
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <h3>자료가 없습니다.</h3>
+                            </div>
+                        </div>
+                        <br /><br />
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <div class="@colSize">
+                                <div class="card card-product card-plain text-center">
+                                    <div class="card-image">
+
+                                        @if (memberId == 0 || authYn == true)
+                                        {
+                                            <a href="@Url.Action("ContentList", "Product", new { productKindId = item.ProductKindID, contentTitleId = item.ContentTitleID })">
+                                                <img src="@Html.DisplayFor(modelItem => item.ContentImageURL)" alt="Rounded Image" class="img-thumbnail img-no-padding img-responsive">
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="" data-toggle="modal" data-target="#noticeModal">
+                                                <img src="@Html.DisplayFor(modelItem => item.ContentImageURL)" alt="Rounded Image" class="img-thumbnail img-no-padding img-responsive">
+                                            </a>
+                                        }
+
+                                        <div class="card-body">
+                                            <div class="card-description">
+                                                <h5 class="card-title">@Html.DisplayFor(modelItem => item.ContentTitle)</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- notice modal -->
+<div class="modal" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-notice">
+        <div class="modal-content">
+            <div class="modal-body" style="padding-left: 10px; padding-right: 10px;">
+                <div class="instruction">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-body card-plain">
+                                <h5 class="modal-title text-center" id="myModalLabel">구입(배본)하지 않은 제품은 시청이 불가능합니다.</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.modal, .close').click(function () {
+            $("iframe").each(function () {
+                var src = $(this).attr('src');
+                $(this).attr('src', src);
+            });
+        });
+    });
+
+    var options = {
+        playsinline: false
+    };
+
+    var btnCheck = function (ContentType) {
+
+        var iframe = $('iframe#' + ContentType);
+        var player = new Vimeo.Player(iframe, options);
+
+        player.on('play', function () {
+            enableTextTrack();
+        });
+
+        var enableTextTrack = function () {
+            //player.api('autoplay', 1);
+            console.log('Enable texttrack');
+            player.enableTextTrack('en').then(function (track) {
+                // track.language = the iso code for the language
+                // track.kind = 'captions' or 'subtitles'
+                // track.label = the human-readable label
+            }).catch(function (error) {
+                switch (error.name) {
+                    case 'InvalidTrackLanguageError':
+                        // no track was available with the specified language
+                        break;
+
+                    case 'InvalidTrackError':
+                        // no track was available with the specified language and kind
+                        break;
+
+                    default:
+                        // some other error occurred
+                        break;
+                }
+            });
+        }
+    }
+
+</script>

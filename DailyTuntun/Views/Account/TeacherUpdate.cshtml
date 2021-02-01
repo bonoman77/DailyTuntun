@@ -1,0 +1,119 @@
+﻿@model DailyTuntun.Models.MemberDetailModel
+
+@{
+    ViewData["Title"] = "TeacherUpdate";
+}
+
+<div class="page-header page-header-xs" style="background-image: url('/assets/img/sub/bg_sub.png');">
+    @*<div class="filter"></div>*@
+    <div class="content-center">
+        <div class="container">
+            <div class="motto">
+                <h3 class="title text-dark"><b>교사 정보를 변경합니다.</b></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="section">
+        <div class="container">
+            <h3>교사 정보 변경</h3>
+            <br />
+            <form name="updateform" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-controller="Account" asp-action="TeacherUpdate">
+                @Html.HiddenFor(model => model.MemberID)
+
+                <div class="row">
+                    <div class="col-md-7 col-sm-7">
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="MemberCode" class="control-label">교사 코드</label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="MemberCode" type="text" class="form-control border-input" readonly>
+                            <span asp-validation-for="MemberCode" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="MemberName" class="control-label">교사 이름</label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="MemberName" type="text" class="form-control border-input" readonly>
+                            <span asp-validation-for="MemberName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="UserEmail" class="control-label"></label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="UserEmail" type="text" class="form-control border-input" readonly>
+                            <span asp-validation-for="UserEmail" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="UserPassword" class="control-label"></label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="UserPassword" type="password" class="form-control border-input">
+                            <span asp-validation-for="UserPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="NewPassword" class="control-label"></label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="NewPassword" type="password" class="form-control border-input">
+                            <span asp-validation-for="NewPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="ConfirmPassword" class="control-label"></label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control border-input">
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row buttons-row">
+                    <div class="col-md-3 col-sm-3">
+                        <input type="button" value="취소" onclick="javascript:history.go(-1);" class="btn btn-outline-default btn-block btn-round">
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <input type="submit" value="교사정보변경" class="btn btn-primary btn-block btn-round">
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <input type="button" value="회원탈퇴" onclick="javascript:outMember();" class="btn btn-danger btn-block btn-round">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- outMember modal -->
+<div class="modal" id="myModalOut" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="false">
+    <div class="modal-dialog modal-register">
+        <div class="modal-content" id="outMemberModal">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var outMember = function () {
+        $("#outMemberModal").load(
+            "/Account/OutMemberPartial",
+            function () {
+                $("#myModalOut").modal("show");
+            }
+        );
+    }
+
+</script>
+
+
+
+

@@ -1,0 +1,37 @@
+﻿
+<div class="modal-header no-border-header text-center">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h3 class="modal-title text-center">회원탈퇴</h3>
+    <p>회원탈퇴를 하시면 더 이상 컨텐츠 이용이 불가능합니다.</p>
+    <p>정말로 회원탈퇴를 하시겠습니까?</p>
+</div>
+
+<form name="searchform" id="searchform" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-controller="Account" asp-action="SearchMemberAddPartial">
+    <div class="modal-body">
+        <div class="form-group text-center">
+            <label id="outResult" class="control-label text-danger"></label>
+        </div>
+        <input type="button" value="취 소" class="btn btn-outline-default btn-block btn-round" data-dismiss="modal" aria-hidden="true" />
+        <input type="button" value="탈 퇴" class="btn btn-danger btn-block btn-round" onclick="memberOut()" />
+    </div>
+    <br />
+</form>
+
+<script type="text/javascript">
+    function memberOut() {
+        $.ajax({
+            type: "POST",
+            url: "/Account/OutMemberCheck",
+            success: function (result) {
+                if (result.success == true) {
+                    window.location.href = "/Account/LogOut?messageCode=9001";
+                } else {
+                    document.getElementById("outResult").innerHTML = "회원탈퇴에 실패하였습니다. 관리자에게 문의하세요.";
+                }
+
+            }
+        });
+    }
+</script>

@@ -1,0 +1,72 @@
+﻿@model DailyTuntun.Models.MemberLogInModel
+
+@{
+    ViewData["Title"] = "LogIn";
+
+    var msgCode = ViewData["MsgCode"];
+    bool managerYn = (bool)ViewData["ManagerYn"];
+
+    var title = "로그인";
+    var boxColor = "";
+
+    if (managerYn == true)
+    {
+        title = "교사 로그인";
+        boxColor = "background-color: yellowgreen";
+    }
+
+}
+
+<div class="login-page full-screen">
+    <div class="wrapper">
+        <div class="page-header login-page" style="background-image: url('/assets/img/main/main.jpg');">
+            @*<div class="filter"></div>*@
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto">
+                        <div class="card card-register" style="@boxColor">
+                            <h3 class="card-title"><b>@title</b></h3>
+                            <form class="register-form" name="loginform" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-controller="Account" asp-action="LogIn">
+                                <input type="hidden" id="msgCode" value="@msgCode" />
+                                <input asp-for="ManagerYn" type="hidden" value="@managerYn" />
+                                <div class="input-group-btn">
+                                    <label>사용자 이메일</label>
+                                    <input asp-for="UserEmail" type="text" class="form-control no-border">
+                                    <span asp-validation-for="UserEmail" class="text-danger"></span>
+                                </div>
+                                <div class="input-group-btn">
+                                    <label>비밀번호</label>
+                                    <input asp-for="UserPassword" type="password" class="form-control no-border">
+                                    <span asp-validation-for="UserPassword" class="text-danger"></span>
+                                </div>
+                                <div class="form-check text-left">
+                                    <label class="form-check-label">
+                                        <input asp-for="RememberMe" class="form-check-input" type="checkbox">
+                                        <span asp-validation-for="RememberMe" class="form-check-sign"></span>
+                                        Remember Me
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-danger btn-block btn-round">로그인</button>
+                            </form>
+                            <div class="text-center">
+                                <div asp-validation-summary="ModelOnly" class="text-black-50"></div>
+                            </div>
+                            <div class="text-center forgot">
+                                <a href="@Url.Action("LostPassword", "Account", new { managerYn = @managerYn })" class="btn btn-link btn-facebook"><u><b>비밀번호를 잊어버리셨나요?</b></u></a>
+                            </div>
+                            <div class="text-center forgot">
+                                <a href="@Url.Action("RegisterReAuth", "Account", new { managerYn = @managerYn })" class="btn btn-link btn-facebook" style="margin-top: 0px;"><u><b>가입 후에 이메일이 발송되지 않나요?</b></u></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        document.getElementById("UserEmail").focus();
+    }
+</script>

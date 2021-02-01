@@ -1,0 +1,118 @@
+﻿@model IEnumerable<DailyTuntun.Models.ProductDownloadModel>
+
+@{
+    ViewData["Title"] = "DownloadList";
+
+    int downloadKindId = (int)ViewData["DownloadKindID"];
+}
+
+<div class="page-header page-header-xs" style="background-image: url('/assets/img/bg_default3.png');">
+    @*<div class="filter"></div>*@
+    <div class="content-center">
+        <div class="container">
+            <div class="motto">
+                <h3 class="title text-dark"><b>필요한 컨텐츠를 다운로드 하세요.</b></h3>
+                @if (downloadKindId == 22)
+                {
+                    <button type="button" class="btn btn-pinterest" data-toggle="modal" onclick="window.location.href='@Url.Action("DownloadList", "Product", new { downloadKindId = 22 })';">New TLD</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-default" data-toggle="modal" onclick="window.location.href='@Url.Action("DownloadList", "Product", new { downloadKindId = 22 })';">New TLD</button>
+                }
+                @if (downloadKindId == 24)
+                {
+                    <button type="button" class="btn btn-pinterest" data-toggle="modal" onclick="window.location.href='@Url.Action("DownloadList", "Product", new { downloadKindId = 24 })';">Magic Box</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-default" data-toggle="modal" onclick="window.location.href='@Url.Action("DownloadList", "Product", new { downloadKindId = 24 })';">Magic Box</button>
+                }
+                @if (downloadKindId == 21)
+                {
+                    <button type="button" class="btn btn-pinterest" data-toggle="modal" onclick="window.location.href='@Url.Action("DownloadList", "Product", new { downloadKindId = 21 })';">TLD</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-default" data-toggle="modal" onclick="window.location.href='@Url.Action("DownloadList", "Product", new { downloadKindId = 21 })';">TLD</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="section">
+        <div class="container">
+            <div class="motto">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="text-center">
+                                            @Html.DisplayNameFor(model => model.FileKind)
+                                        </div>
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Title)
+                                    </th>
+                                    <th>
+                                        <div class="text-center">
+                                            @Html.DisplayNameFor(model => model.FilePath)
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="text-center">
+                                            @Html.DisplayNameFor(model => model.Version)
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="text-center">
+                                            @Html.DisplayNameFor(model => model.CreateDate)
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="text-center">
+                                                @Html.DisplayFor(modelItem => item.FileKind)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Title)
+                                        </td>
+                                        <td>
+                                            <div class="text-center">
+                                                <a href="@Html.DisplayFor(modelItem => item.FilePath)">
+                                                    다운로드
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-center">
+                                                @Html.DisplayFor(modelItem => item.Version)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-center">
+                                                @Html.DisplayFor(modelItem => item.CreateDate)
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,168 @@
+﻿@model DailyTuntun.Models.MemberRegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="page-header page-header-xs" style="background-image: url('/assets/img/sub/bg_sub.png');">
+    @*<div class="filter"></div>*@
+    <div class="content-center">
+        <div class="container">
+            <div class="motto">
+                <h3 class="title text-dark"><b>기관 등록을 환영합니다.</b></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="section">
+        <div class="container">
+            <h3>기관 등록</h3>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br />
+            <form name="registerform" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-controller="Account" asp-action="Register">
+                <div class="row">
+                    <div class="col-md-7 col-sm-7">
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="MemberCode" class="control-label"></label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <div class="input-group">
+                                <input asp-for="MemberCode" type="text" class="form-control border-input" readonly>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn" onclick="javascript:simpleSearch();" style="border-bottom-width: 0px;" data-toggle="modal" data-target="#loginModal">
+                                        <i class="nc-icon nc-zoom-split"></i> 기관코드찾기
+                                    </button>
+                                </div>
+                            </div>
+                            <span asp-validation-for="MemberCode" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="MemberName" class="control-label"></label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="MemberName" type="text" class="form-control border-input">
+                            <span asp-validation-for="MemberName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="UserEmail" class="control-label"></label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="UserEmail" type="text" class="form-control border-input">
+                            <span asp-validation-for="UserEmail" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="UserPassword" class="control-label"></label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="UserPassword" type="password" class="form-control border-input">
+                            <span asp-validation-for="UserPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="ConfirmPassword" class="control-label"></label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control border-input">
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <a href="@Url.Action("Terms", "Home")" target="_blank">이용약관보기</a>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" id="TermsAgree"> 약관의 내용에 동의합니다.
+                                <span class="form-check-sign"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row buttons-row">
+                    <div class="col-md-3 col-sm-2">
+                        <input type="button" value="취소" onclick="javascript:history.go(-1);" class="btn btn-outline-danger btn-block btn-round">
+                    </div>
+                    <div class="col-md-3 col-sm-2">
+                        <input type="button" id="onsubmit" onclick="onSubmit()" value="회원가입" class="btn btn-primary btn-block btn-round" OnClientClick="if(this.value === 'Saving...') { return false; } else { this.value = 'Saving...'; }">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- searchMember modal -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="false">
+    <div class="modal-dialog modal-register">
+        <div class="modal-content" id="searchMemberModal">
+        </div>
+    </div>
+</div>
+
+<!-- noticemodal -->
+<div class="modal" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-sm modal-notice">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p>회원 종류를 먼저 선택해주세요. </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link text-daner" data-dismiss="modal" aria-hidden="true">확 인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- noticemodal -->
+<div class="modal" id="termModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-sm modal-notice">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p>사용자 등록 약관을 읽고, 그 내용에 동의하셔야 가입이 가능합니다.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link text-daner" data-dismiss="modal" aria-hidden="true">확 인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var simpleSearch = function () {
+        $("#searchMemberModal").load("/Account/SearchMemberPartial",
+            function () {
+                $("#myModal").modal("show");
+                $("#myModal").on('shown.bs.modal', function () {
+                    $("#Account").focus();
+                });
+            }
+        );
+    }
+
+    $("#onsubmit").click(function () {
+        var submitBtn = $(this);
+        submitBtn.attr("disabled", true);
+        setTimeout(function () {
+            submitBtn.removeAttr("disabled");
+        }, 2000);
+    });
+
+    function onSubmit() {
+        if (document.getElementById("TermsAgree").checked == false) {
+            $("#termModal").modal("show");
+        }
+        else {
+            document.registerform.submit();
+        }
+    }
+</script>
+
+
+

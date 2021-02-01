@@ -3,46 +3,253 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DailyTuntun</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+
+    <!--Favicon -->
+    <link rel="icon" type="image/png" href="~/assets/img/favicon.png">
+    <!-- Android icon -->
+    <link href='~/assets/img/icon192x192.png' rel='icon' type='image/png' />
+    <link href='~/assets/img/icon192x192.png' rel='shortcut icon' type='image/png' />
+    <!-- iOS icon -->
+    <link href='~/assets/img/icon128x128.png' rel='apple-touch-icon' type='image/png' />
+
+    <title>
+        DAILY TUNTUN
+    </title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://daily.tuntun.com/">
+    <meta property="og:title" content="DAILY TUNTUN">
+    <meta property="og:description" content="매일매일 신나는 튼튼영어와 함께!">
+    <meta property="og:image" content="/assets/img/open_graph.png">
+
+    <!-- Fonts and icons -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.min.css" rel="stylesheet" />
+
+    <!-- CSS Files -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/css/paper-kit.css?v=2.2.2" rel="stylesheet" />
+    <link href="~/assets/demo/demo.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <!-- jquery -->
+    <script src="~/assets/js/core/jquery.min.js" type="text/javascript"></script>
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DailyTuntun</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+
+@{
+    string controllerName = ViewContext.RouteData.Values["Controller"].ToString();
+    string actionName = ViewContext.RouteData.Values["Action"].ToString();
+    bool managerYn = false;
+
+    if (User.FindFirst("ManagerYn") != null)
+    {
+        managerYn = Convert.ToBoolean(User.FindFirst("ManagerYn").Value);
+    }
+}
+
+<body class="sidebar-collapse">
+
+    <input type="hidden" id="msgCode" value="@ViewData["MsgCode"]" />
+
+    <nav class="navbar navbar-expand-lg fixed-top nav-down navbar-transparent" color-on-scroll="500">
+        <div class="container">
+            <div class="navbar-translate">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")" rel="tooltip" title="프리스쿨 학습 스트리밍 서비스" data-placement="bottom">
+                    @*
+                        <div class="text-dark">
+                            TUNTUN PLAYER
+                        </div>
+                    *@
+                    <div class="text-dark">
+                        <img src="~/assets/img/main/dailytuntun_logo.png" />
+                    </div>
+                </a>
+                <button class="navbar-toggler text-dark" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar bar1"></span>
+                    <span class="navbar-toggler-bar bar2"></span>
+                    <span class="navbar-toggler-bar bar3"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            </div>
+            <div class="collapse navbar-collapse" data-color="orange">
+                <ul class="navbar-nav ml-auto">
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-dark" href="@Url.Action("TitleList", "Product", new { productKindId = 3,  contentGroupId = 1 })" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
+                            4세
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-dark" href="@Url.Action("TitleList", "Product", new { productKindId = 3, contentGroupId = 2 })" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
+                            5세
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-dark" href="@Url.Action("TitleList", "Product", new { productKindId = 3, contentGroupId = 3 })" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
+                            6세
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-dark" href="@Url.Action("TitleList", "Product", new { productKindId = 3, contentGroupId = 4 })" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
+                            7세
+                        </a>
+                    </li>
+
+                    @*<li class="nav-item dropdown">
+                        <a class="nav-link text-dark" href=@Url.Action("TitleList", "Product", new { productKindId = 3, contentGroupId = 5 }) id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
+                            Special
+                        </a>
+                    </li>*@
+
+
+                    @{ if (User.Identity.IsAuthenticated && Convert.ToBoolean(User.FindFirst("ManagerYn").Value) == false)
+                        {
+                            <li class="dropdown nav-item">
+                                <div class="dropdown-toggle nav-link text-dark" id="navbarDropdownMenuLinks" data-toggle="dropdown" style="cursor:pointer;">
+                                    마이 페이지
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-danger" aria-labelledby="navbarDropdownMenuLink1">
+                                    <a class="dropdown-item" href="@Url.Action("UserUpdate", "Account")">
+                                        기관정보 변경
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark" href="@Url.Action("LogOut", "Account", new { mngYn = false })" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
+                                    로그아웃
+                                </a>
+                            </li>
+                        }
+                        else if (User.Identity.IsAuthenticated && Convert.ToBoolean(User.FindFirst("ManagerYn").Value) == true)
+                        {
+                            <li class="dropdown nav-item">
+                                <div class="dropdown-toggle nav-link text-dark" id="navbarDropdownMenuLinks" data-toggle="dropdown" style="cursor:pointer;">
+                                    마이 페이지
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-danger" aria-labelledby="navbarDropdownMenuLink1">
+                                    <a class="dropdown-item" href="@Url.Action("TeacherUpdate", "Account")">
+                                        교사정보 변경
+                                    </a>
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-danger" aria-labelledby="navbarDropdownMenuLink1">
+                                    <a class="dropdown-item" href="@Url.Action("DownloadList", "Product")">
+                                        컨텐츠 다운로드
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark" href="@Url.Action("LogOut", "Account", new { mngYn = true })" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
+                                    로그아웃
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark" href="@Url.Action("Register", "Account")" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
+                                    기관 등록
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark" href="@Url.Action("LogIn", "Account")" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
+                                    로그인
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+
+    @RenderBody()
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <nav class="footer-nav">
+                    <ul>
+                        <li>
+                            <a href="@Url.Action("Index", "Home")">DAILY TUNTUN</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        @{
+                            if (!User.Identity.IsAuthenticated)
+                            {
+                                <li>
+                                    <a href="@Url.Action("LogIn", "Account", new { managerYn = true })">교사 로그인</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("TeacherRegister", "Account", new { managerYn = true })">교사 등록</a>
+                                </li>
+                            }
+                            @*if (managerYn == true)
+                            {
+                                <li>
+                                    <a href="@Url.Action("Index", "Admin")">관리자 모드</a>
+                                </li>
+
+                            }*@
+
+                        }
+
+                        <li>
+                            <a href="@Url.Action("Terms", "Home")">이용약관</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Privacy", "Home")"><b>개인정보처리방침</b></a>
                         </li>
                     </ul>
+                </nav>
+                <div class="credits ml-auto">
+                    @*
+                        <span class="copyright">
+                            ©
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>, (주)튼튼영어
+                        </span>
+                    *@
+                    <div class="copyrightImg"><img src="../assets/img/main/foot_logo.png" /></div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - DailyTuntun - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+    <!--   Core JS Files   -->
+    <script src="~/assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="~/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+    <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+    <script src="~/assets/js/plugins/bootstrap-switch.js"></script>
+    <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+    <script src="~/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+    <!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
+    <script src="~/assets/js/plugins/moment.min.js"></script>
+    <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
+    <script src="~/assets/js/plugins/bootstrap-tagsinput.js"></script>
+    <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+    <script src="~/assets/js/plugins/bootstrap-selectpicker.js" type="text/javascript"></script>
+    <!--	Plugin for Datetimepicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
+    <script src="~/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+    <!--  Plugin for Sweet Alert -->
+    <script src="~/assets/js/plugins/es6-promise.min.js" type="text/javascript"></script>
+    <script src="~/assets/js/plugins/es6-promise.auto.min.js" type="text/javascript"></script>
+    <script src="~/assets/js/plugins/sweetalert2.min.js" type="text/javascript"></script>
+    <!--  Notifications Plugin    -->
+    <script src="~/assets/js/plugins/bootstrap-notify.js" type="text/javascript"></script>
+    <script src="~/assets/js/plugins/jasny-bootstrap.min.js" type="text/javascript"></script>
+    <!-- Control Center for Paper Kit: parallax effects, scripts for the example pages etc -->
+    <script src="~/assets/js/paper-kit.js?v=2.2.2" type="text/javascript"></script>
+    <script src="~/assets/js/core/jquery.vimeo.api.js" type="text/javascript"></script>
+    <script src="~/assets/js/core/jquery-ui.min.js" type="text/javascript"></script>
+    <!--  Defalut  -->
+    <script src="~/js/site.js" type="text/javascript"></script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

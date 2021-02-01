@@ -1,0 +1,112 @@
+﻿@model IEnumerable<DailyTuntun.Models.ProductGroupModel>
+
+@{
+    ViewData["Title"] = "MainList";
+    int productKindId = (int)ViewData["ProductKindID"];
+    string colSize = "col-md-3 col-sm-6";
+
+}
+
+@if (productKindId == 4)
+{
+    <div class="page-header page-header-small" style="background-image: url('/assets/img/main_junior.png');">
+        <div class="content-center">
+            <div class="container text-dark">
+                <h5><span class="jrTit">집에서 만나는 영어유치원 </span>우리집에서 나만의 선생님과 1:1로!</h5>
+                <h2>
+                    <b>튼튼영어 Junior</b>
+                </h2>
+            </div>
+        </div>
+    </div>
+}
+else if (productKindId == 5)
+{
+    <div class="page-header page-header-small" style="background-image: url('/assets/img/main_tutoring.png');">
+        <div class="content-center">
+            <div class="container text-dark">
+                <h5>결과가 다른 초등영어</h5>
+                <h2>
+                    <b>튼튼영어 Tutoring</b>
+                </h2>
+            </div>
+        </div>
+    </div>
+}
+else if (productKindId == 26)
+{
+    <div class="page-header page-header-small" style="background-image: url('/assets/img/main_live.png');">
+        <div class="content-center">
+            <div class="container text-dark">
+                <h5>나에게 Fit한 튼튼쌤을 화상으로!</h5>
+                <h2>
+                    <b>튼튼영어라이브</b>
+                </h2>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="page-header page-header-small" style="background-image: url('/assets/img/main_berry.png');">
+        <div class="content-center">
+            <div class="container text-dark">
+                <h5>PLAY! LEARN! GROW! <br /> 하루종일 신나는 영어놀이터</h5>
+                <h2>
+                    <b>Baby League</b>
+                </h2>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="wrapper">
+    <div class="main">
+        <div class="section section-gray">
+            <div class="container">
+                <div class="row">
+
+                    @if (Model.Count() == 0)
+                    {
+                        <br /><br />
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <h3>자료가 없습니다.</h3>
+                            </div>
+                        </div>
+                        <br /><br />
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <div class="@colSize">
+                                <div class="card card-profile" style="margin-top: 20px;">
+
+                                    @if (item.ContentGroupID == 73)
+                                    {
+                                        <a href="@Url.Action("ContentList", "Product", new { productKindId = item.ProductKindID, contentTitleId = 488 })">
+                                            <div class="card-body">
+                                                <img src="@Html.DisplayFor(modelItem => item.ContentGroupImageURL)" />
+                                            </div>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("TitleList", "Product", new { productKindId = item.ProductKindID, contentGroupId = item.ContentGroupID })">
+                                            <div class="card-body">
+                                                <img src="@Html.DisplayFor(modelItem => item.ContentGroupImageURL)" />
+                                            </div>
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

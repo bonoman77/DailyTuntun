@@ -2,7 +2,26 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="page-header" style="background-image: url('../assets/img/main/main.jpg');">
+    @*<div class="filter"></div>*@
+    <div class="content-center">
+        <div class="container">
+            <div class="motto">
+                <h4 class="description text-dark">매일매일 신나는 튼튼영어와 함께</h4>
+                <div class="text-dark">
+                    <img src="~/assets/img/main/main_title.png" />
+                </div>
+                <br />
+
+                <a href="@Url.Action("TitleList", "Product", new { productKindId = 3, contentGroupId = 1 })"><img src="~/assets/img/main/index_btn_4.png" /></a>
+                <a href="@Url.Action("TitleList", "Product", new { productKindId = 3, contentGroupId = 2 })"><img src="~/assets/img/main/index_btn_5.png" /></a>
+                <a href="@Url.Action("TitleList", "Product", new { productKindId = 3, contentGroupId = 3 })"><img src="~/assets/img/main/index_btn_6.png" /></a>
+                <a href="@Url.Action("TitleList", "Product", new { productKindId = 3, contentGroupId = 4 })"><img src="~/assets/img/main/index_btn_7.png" /></a>
+                @*<a href="@Url.Action("TitleList", "Product", new { productKindId = 3, contentGroupId = 5 })"><img src="~/assets/img/main/index_btn_special.png" /></a>*@
+            </div>
+        </div>
+    </div>
 </div>
+<br />
+
+

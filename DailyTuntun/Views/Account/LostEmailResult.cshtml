@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "LostEmailResult";
+}
+
+<div class="page-header page-header-xs" style="background-image: url('/assets/img/sub/bg_sub.png');">
+    @*<div class="filter"></div>*@
+    <div class="content-center">
+        <div class="container">
+            <div class="motto">
+                <h3 class="title text-dark"><b>이메일 확인</b></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="main">
+        <!-- section -->
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-12 mr-auto">
+                        <div class="info info-horizontal">
+                            <div class="description">
+                                <h3> 확인하신 이메일은 다음과 같습니다.</h3>
+                                <p>@ViewData["UserEmail"]</p>
+                            </div>
+                        </div>
+                        <div class="info info-horizontal">
+                            <h3 class="card-title"><b>회원용</b></h3>
+                            <div class="description">
+                                <h3> 로그인 하기 </h3>
+                                <p><a href="@Url.Action("LogIn", "Account")">로그인</a>페이지로 이동합니다.</p>
+                            </div>
+                            <div class="description">
+                                <h3> 이메일 변경하기 </h3>
+                                <p>등록한 이메일을 <a href="@Url.Action("UpdateEmail", "Account")">다른 이메일 주소로 변경</a>해봅니다.</p>
+                            </div>
+                        </div>
+                        <div class="info info-horizontal">
+                            <h3 class="card-title"><b>교사용</b></h3>
+                            <div class="description">
+                                <h3> 로그인 하기 </h3>
+                                <p><a href="@Url.Action("LogIn", "Account", new { managerYn = true })">로그인</a>페이지로 이동합니다.</p>
+                            </div>
+                            <div class="description">
+                                <h3> 이메일 변경하기 </h3>
+                                <p>등록한 이메일을 <a href="@Url.Action("UpdateEmail", "Account", new { managerYn = true })">다른 이메일 주소로 변경</a>해봅니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

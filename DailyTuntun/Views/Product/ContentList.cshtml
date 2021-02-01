@@ -1,0 +1,171 @@
+﻿@model IEnumerable<DailyTuntun.Models.ProductContentModel>
+@{
+    ViewData["Title"] = "ContentList";
+
+    int contentTitleId = (int)ViewData["ContentTitleID"];
+    string contentTitle = (string)ViewData["ContentTitle"];
+    string contentImageURL = (string)ViewData["ContentImageURL"];
+    string contentGroupImageURL = (string)ViewData["ContentGroupImageURL"];
+
+    int productKindId = (int)ViewData["ProductKindID"];
+
+    string bgPath = "/assets/img/sub/bg_gray.png";
+}
+
+<div class="page-header page-header-small" style="background-image: url('@bgPath');">
+    @*<div class="filter"></div>*@
+    <div class="content-center">
+        <div class="container">
+            <div class="motto">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="@contentImageURL" alt="Rounded Image" class="img-rounded img-tweet-link img-responsive" style="max-width:150px">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="description">
+                            <img src="@contentGroupImageURL" width="100" />
+                        </div>
+                        <br />
+                        <h5 class="description text-dark-berry">@contentTitle</h5>
+                        <br />
+                        <button type="button" class="btn btn-reddit" onclick="resetPlay(@contentTitleId);">시청 초기화</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="wrapper">
+        <!-- section -->
+        <div class="section section-blog">
+            <div class="container">
+                <div class="row">
+
+                    @if (Model.Count() == 0)
+                    {
+                        <br /><br />
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <h3>자료가 없습니다.</h3>
+                            </div>
+                        </div>
+                        <br /><br />
+
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                <div class="card card-product card-plain text-center">
+                                    <div class="card-image" id="image_@item.ContentID" style="display: block;">
+                                        <a href="javascript:playModal(@Html.DisplayFor(modelItem => item.ContentID));">
+                                            <img src="@Html.DisplayFor(modelItem => item.ImageURL)" alt="Rounded Image" class="img-thumbnail img-no-padding img-responsive">
+                                        </a>
+                                    </div>
+                                    <div class="card-image" id="imageCom_@item.ContentID" style="display: none;">
+                                        <a href="javascript:playModal(@Html.DisplayFor(modelItem => item.ContentID));">
+                                            <img src="@Html.DisplayFor(modelItem => item.CompleteImageURL)" alt="Rounded Image" class="img-thumbnail img-no-padding img-responsive">
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- all modal -->
+                            <div class="modal" id="play_@item.ContentID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+                                <div class="modal-dialog modal-notice">
+                                    <div class="modal-content">
+                                        <div class="modal-body" style="padding-left: 10px; padding-right: 10px;">
+                                            <div class="instruction">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="card card-body card-plain">
+                                                            <iframe src="@Html.DisplayFor(modelItem => item.StreamURL)" id="content_@item.ContentID" frameborder="0" playsinline="false" allow="autoplay; fullscreen" webkitallowfullscreen mozallowfullscreen allowfullscreen style="max-width: none !important"></iframe>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">닫기</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*<script type="text/javascript">
+                            $("#content_"+@item.ContentID)(function () {
+
+                                var ContentID = @item.ContentID;
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/Product/ContentViewCheck",
+                                    data: { contentId: ContentID },
+                                });
+
+                            });
+                            </script>*@
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script type="text/javascript">
+
+
+    function playModal(ContentID) {
+
+        var cId = ContentID;
+
+        $.ajax({
+            type: "POST",
+            url: "/Product/ContentViewCheck",
+            data: { contentId: cId },
+            success: function (result) {
+                document.getElementById("image_" + cId).style.display = "none";
+                document.getElementById("imageCom_" + cId).style.display = "block";
+            }
+        });
+
+        $("#play_" + cId).modal("show");
+    }
+
+    function resetPlay(ContentTitleID) {
+
+        $.ajax({
+            type: "POST",
+            url: "/Product/ContentViewCheckReset",
+            data: { contentTitleId: ContentTitleID },
+            success: function (result) {
+                window.location.reload();
+            }
+        });
+
+        $("#play_" + cId).modal("show");
+    }
+
+    $(function () {
+        $('.modal, .close').click(function () {
+            $("iframe").each(function () {
+                var src = $(this).attr('src');
+                $(this).attr('src', src);
+            });
+        });
+    });
+
+</script>
+
+
+
+
+
+

@@ -1,11 +1,11 @@
-﻿using DailyTuntun.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using DailyTuntun.Models;
 
 namespace DailyTuntun.Controllers
 {
@@ -18,12 +18,20 @@ namespace DailyTuntun.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string returnUrl = null, int msgCode = 0)
         {
+            ViewData["ReturnUrl"] = returnUrl;
+            ViewData["MsgCode"] = msgCode;
+
             return View();
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Terms()
         {
             return View();
         }

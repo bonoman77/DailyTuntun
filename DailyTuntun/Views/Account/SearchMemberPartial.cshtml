@@ -1,0 +1,67 @@
+﻿@model DailyTuntun.Models.MemberSearchCodeModel
+
+<div class="modal-header no-border-header text-center">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+
+    <h3 class="modal-title text-center">프리스쿨 기관코드 확인</h3>
+    <p>프리스쿨(ebabyleague.com)의 계정을 확인하세요.</p>
+</div>
+
+<form name="searchform" id="searchform" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-controller="Account" asp-action="SearchMemberPartial">
+    @Html.HiddenFor(model => model.MemberName)
+    <div class="modal-body">
+        <div class="form-group">
+            <label asp-for="Account" class="control-label"></label>
+            <input asp-for="Account" type="text" class="form-control border-input">
+            <span asp-validation-for="Account" class="text-danger" id="checkAccount"></span>
+
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" type="password" class="form-control border-input">
+            <span asp-validation-for="Password" class="text-danger"></span>
+
+        </div>
+        <div class="form-group text-center">
+            <label id="searchResult" class="control-label text-danger"></label>
+        </div>
+        <input type="button" id="submit" value="확 인" class="btn btn-block btn-round" onclick="memberCheck()" />
+    </div>
+    <br />
+</form>
+
+<script type="text/javascript">
+    $("#Password").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#submit").click();
+        }
+    });
+
+    function memberCheck() {
+        var formData = $('#searchform').serialize()
+
+        $.ajax({
+            type: "POST",
+            url: "/Account/SearchMemberCheck",
+            data: $('#searchform').serialize(),
+            success: function (result) {
+                if (result.success == true) {
+                    $("#myModal").modal("hide");
+                    document.getElementById("MemberCode").value = result.memberCode;
+                    document.getElementById("MemberName").value = result.memberName;
+                } else {
+                    if (result.errorNum == 9) {
+                        document.getElementById("searchResult").innerHTML = "확인되지 않는 계정입니다. 다시 확인해주세요.";
+                    } else if (result.errorNum == 8) {
+                        document.getElementById("searchResult").innerHTML = "이미 등록되어있는 회원코드입니다. 다시 확인해주세요.";
+                    } else if (result.errorNum == 1 || result.errorNum == 2) {
+                        document.getElementById("searchResult").innerHTML = "먼저 ebabyleague.com 에서 제품 인증을 해주세요.";
+                    }
+                }
+
+            }
+        });
+    }
+</script>

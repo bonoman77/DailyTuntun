@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="~/assets/img/favicon.png">
+    <meta name="google-site-verification" content="EYskxDove8gwJhBWnzJDwifVidVBMIuJvbiOrptJaGk" />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>@ViewData["Title"] - 데일리튼튼 관리자모드</title>
+
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+
+    <!--Favicon -->
+    <link rel="icon" type="image/png" href="~/assets/img/favicon.png">
+    <!-- Android icon -->
+    <link href='~/assets/img/icon192x192.png' rel='icon' type='image/png' />
+    <link href='~/assets/img/icon192x192.png' rel='shortcut icon' type='image/png' />
+    <!-- iOS icon -->
+    <link href='~/assets/img/icon128x128.png' rel='apple-touch-icon' type='image/png' />
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous"
+          asp-fallback-href="~/assets/css/bootstrap.min.css"
+          asp-fallback-test-class="sr-only"
+          asp-fallback-test-property="position"
+          asp-fallback-test-value="absolute" />
+    <link href="~/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+    <link href="~/assets/trumbo/ui/trumbowyg.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"
+            asp-fallback-src="~/assets/js/core/jquery.min.js"
+            asp-fallback-test="window.jQuery">
+    </script>
+</head>
+
+@{
+    string controllerName = ViewContext.RouteData.Values["Controller"].ToString();
+    string actionName = ViewContext.RouteData.Values["Action"].ToString();
+
+    string sideBarActiveColor = "danger";
+}
+
+<body class="">
+
+    <input type="hidden" id="messageBox" value="@ViewData["Message"]" />
+
+    <div class="wrapper ">
+        <div class="sidebar" data-color="white" data-active-color="@sideBarActiveColor">
+
+            <div class="logo">
+                <a href="@Url.Action("Index", "Admin")" class="simple-text logo-mini">
+                    <div class="logo-image-small">
+                        <img src="../../assets/img/logo/logo_small_player.svg">
+                    </div>
+                </a>
+                <a href="@Url.Action("Index", "Admin")" class="simple-text logo-normal">
+                    <div class="logo-image-small">
+                        <img src="../../assets/img/logo/mainLogo_player.svg" style="height:28px;width:100px">
+                    </div>
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+
+                    @if (controllerName == "Admin" && (actionName == "MemberList" || actionName == "MemberUpdate"))
+                    {
+                        <li class="active btn-magnify">
+                            <a href="@Url.Action("MemberList", "Admin")">
+                                <i class="nc-icon nc-bullet-list-67"></i>
+                                <p>Member</p>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="btn-magnify">
+                            <a href="@Url.Action("MemberList", "Admin")">
+                                <i class="nc-icon nc-bullet-list-67"></i>
+                                <p>Member</p>
+                            </a>
+                        </li>
+                    }
+
+                    @if (controllerName == "Admin" && (actionName == "ContentList"))
+                    {
+                        <li class="active btn-magnify">
+                            <a href="@Url.Action("ContentList", "Admin")">
+                                <i class="nc-icon nc-book-bookmark"></i>
+                                <p>Contents</p>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="btn-magnify">
+                            <a href="@Url.Action("ContentList", "Admin")">
+                                <i class="nc-icon nc-book-bookmark"></i>
+                                <p>Contents</p>
+                            </a>
+                        </li>
+                    }
+
+
+                    @*@if (controllerName == "Admin" && actionName == "CounselList")
+                        {
+                            <li class="active btn-magnify">
+                                <a href="@Url.Action("CounselList", "Admin", new { id = 1 })">
+                                    <i class="nc-icon nc-bank"></i>
+                                    <p>Dash Board</p>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="btn-magnify">
+                                <a href="@Url.Action("CounselList", "Admin", new { id = 1 })">
+                                    <i class="nc-icon nc-bank"></i>
+                                    <p>Dash Board</p>
+                                </a>
+                            </li>
+                        }*@
+
+
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <div class="navbar-minimize">
+                            <button id="minimizeSidebar" class="btn btn-icon btn-round">
+                                <i class="nc-icon nc-minimal-right text-center visible-on-sidebar-mini"></i>
+                                <i class="nc-icon nc-minimal-left text-center visible-on-sidebar-regular"></i>
+                            </button>
+                        </div>
+                        <div class="navbar-toggle">
+                            <button type="button" class="navbar-toggler">
+                                <span class="navbar-toggler-bar bar1"></span>
+                                <span class="navbar-toggler-bar bar2"></span>
+                                <span class="navbar-toggler-bar bar3"></span>
+                            </button>
+                        </div>
+                        <a class="navbar-brand" href="#pablo">튼튼플레이어 관리자모드</a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+
+                        <ul class="navbar-nav">
+
+                            @*<li class="nav-item btn-rotate dropdown">
+                                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="nc-icon nc-settings"></i>
+                                        <p>
+                                            <span class="d-lg-none d-md-block">관리자 메뉴</span>
+                                        </p>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="@Url.Action("UserList", "Admin", new { id = 1 })">사용자 관리</a>
+                                        <a class="dropdown-item" href="@Url.Action("NoticeList", "Admin", new { id = 1 })">공지사항 관리</a>
+                                    </div>
+                                </li>*@
+                            <li class="nav-item btn-rotate">
+                                <a class="nav-link" href="@Url.Action("LogOut", "Account", new { mngYn = true})">
+                                    <i class="nc-icon nc-button-power"></i>
+                                    <p>
+                                        <span class="d-lg-none d-md-block">로그아웃</span>
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+
+            @RenderBody()
+
+            <footer class="footer footer-black footer-white">
+                <div class="container-fluid">
+                    <div class="row">
+                        <nav class="footer-nav">
+                            <ul>
+                                <li>
+                                    <a href="https://player.tuntun.com/">Tuntun Player</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="credits ml-auto">
+                            <span class="copyright">
+                                ©
+                                <script>
+                                    document.write(new Date().getFullYear())
+                                </script>, Tuntun English
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="~/assets/js/core/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"
+            asp-fallback-src="~/assets/js/core/bootstrap.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+    </script>
+    <script src="~/assets/trumbo/trumbowyg.min.js"></script>
+    <script src="~/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/assets/js/plugins/moment.min.js"></script>
+    <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+    <script src="~/assets/js/plugins/bootstrap-switch.js"></script>
+    <!--  Plugin for Sweet Alert -->
+    <script type="text/javascript" src="~/assets/js/plugins/es6-promise.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/plugins/es6-promise.auto.min.js"></script>
+    <script src="~/assets/js/plugins/sweetalert2.min.js"></script>
+    <!-- Forms Validations Plugin -->
+    <script src="~/assets/js/plugins/jquery.validate.min.js"></script>
+    <!--  Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
+    <script src="~/assets/js/plugins/jquery.bootstrap-wizard.js"></script>
+    <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+    <script src="~/assets/js/plugins/bootstrap-selectpicker.js"></script>
+    <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
+    <script src="~/assets/js/plugins/bootstrap-datetimepicker.js"></script>
+    <!--  DataTables.net Plugin, full documentation here: https://datatables.net/    -->
+    <script src="~/assets/js/plugins/jquery.dataTables.min.js"></script>
+    <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
+    <script src="~/assets/js/plugins/bootstrap-tagsinput.js"></script>
+    <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+    <script src="~/assets/js/plugins/jasny-bootstrap.min.js"></script>
+    <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
+    <script src="~/assets/js/plugins/jquery-jvectormap.js"></script>
+    <!--  Plugin for the Bootstrap Table -->
+    <script src="~/assets/js/plugins/nouislider.min.js"></script>
+    <!-- Chart JS -->
+    <script src="~/assets/js/plugins/chartjs.min.js"></script>
+    <!--  Notifications Plugin    -->
+    <script src="~/assets/js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="~/assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>
+

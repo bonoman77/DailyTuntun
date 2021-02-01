@@ -1,0 +1,104 @@
+﻿@model DailyTuntun.Models.MemberEmailModel
+
+@{
+    ViewData["Title"] = "UpdateEmail";
+
+    bool managerYn = (bool)ViewData["ManagerYn"];
+}
+
+<div class="page-header page-header-xs" style="background-image: url('/assets/img/sub/bg_sub.png');">
+    @*<div class="filter"></div>*@
+    <div class="content-center">
+        <div class="container">
+            <div class="motto">
+                @{
+                    if (managerYn == true)
+                    {
+                        <h3 class="title text-dark"><b>교사 이메일을 변경합니다.</b></h3>
+                    }
+                    else
+                    {
+                        <h3 class="title text-dark"><b>이메일을 변경합니다.</b></h3>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="section">
+        <div class="container">
+            <h4>이메일을 변경하신 후에는 이메일 인증이 한차례 필요합니다.</h4>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br /><br />
+            <form name="registerform" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-controller="Account" asp-action="UpdateEmail">
+                <input asp-for="ManagerYn" type="hidden" value="@managerYn" />
+                <div class="row">
+                    <div class="col-md-7 col-sm-7">
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="MemberName" class="control-label"></label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="MemberName" type="text" class="form-control border-input">
+                            <span asp-validation-for="MemberName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="UserEmail" class="control-label"></label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="UserEmail" type="text" class="form-control border-input">
+                            <span asp-validation-for="UserEmail" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="UserNewEmail" class="control-label"></label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="UserNewEmail" type="text" class="form-control border-input">
+                            <span asp-validation-for="UserNewEmail" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="UserPassword" class="control-label"></label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="UserPassword" type="password" class="form-control border-input">
+                            <span asp-validation-for="UserPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row buttons-row">
+                    <div class="col-md-3 col-sm-3">
+                        <input type="button" value="취소" onclick="javascript:history.go(-1);" class="btn btn-outline-danger btn-block btn-round">
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <input type="button" id="onsubmit" onclick="onSubmit()" value="변경" class="btn btn-primary btn-block btn-round">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    $("#onsubmit").click(function () {
+        var submitBtn = $(this);
+        submitBtn.attr("disabled", true);
+        setTimeout(function () {
+            submitBtn.removeAttr("disabled");
+        }, 3000);
+    });
+
+    function onSubmit() {
+        document.registerform.submit();
+    }
+</script>
+

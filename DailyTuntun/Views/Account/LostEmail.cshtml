@@ -1,0 +1,57 @@
+﻿@model DailyTuntun.Models.MemberLostEmailModel
+
+@{
+    ViewData["Title"] = "LostEmail";
+
+    bool managerYn = (bool)ViewData["ManagerYn"];
+
+    var title = "이메일 찾기";
+    var memberCode = "기관 코드"; 
+    var boxColor = "";
+
+    if (managerYn == true)
+    {
+        title = "교사 이메일 찾기";
+        memberCode = "교사 코드";  
+        boxColor = "background-color: yellowgreen";
+    }
+}
+
+<div class="login-page full-screen">
+    <div class="wrapper">
+        <div class="page-header" style="background-image: url('/assets/img/main/main.jpg');">
+            @*<div class="filter"></div>*@
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto">
+                        <div class="card card-register" style="@boxColor">
+                            <h3 class="card-title"><b>@title</b></h3>
+                            <form class="register-form" name="loginform" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-controller="Account" asp-action="LostEmail">
+                                <input asp-for="ManagerYn" type="hidden" value="@managerYn" />
+                                <div class="input-group-btn">
+                                    <label asp-for="MemberCode" class="control-label">@memberCode</label>
+                                    <input asp-for="MemberCode" type="text" class="form-control no-border">
+                                    <span asp-validation-for="MemberCode" class="text-danger"></span>
+                                </div>
+
+                                <div class="input-group-btn">
+                                    <label asp-for="MemberName" class="control-label"></label>
+                                    <input asp-for="MemberName" type="text" class="form-control no-border">
+                                    <span asp-validation-for="MemberName" class="text-danger"></span>
+                                </div>
+                                <input type="button" value="취소" onclick="location.href='@Url.Action("LogIn", "Account", new { managerYn = @managerYn })'" class="btn btn-outline-danger btn-block btn-round">
+                                <button type="submit" class="btn btn-danger btn-block btn-round" style="margin-top: 5px;">확 인</button>
+                            </form>
+                            <div class="text-center">
+                                <div asp-validation-summary="ModelOnly" class="text-black-50"></div>
+                            </div>
+                            <div class="forgot">
+                                <a href="@Url.Action("LostPassword", "Account", new { managerYn = @managerYn })" class="btn btn-link btn-facebook"><u><b>비밀번호를 잊어버리셨나요?</b></u></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

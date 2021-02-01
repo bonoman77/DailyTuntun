@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "RegisterAuthFail";
+}
+
+<div class="page-header page-header-xs" style="background-image: url('/assets/img/sub/bg_sub.png');">
+    @*<div class="filter"></div>*@
+    <div class="content-center">
+        <div class="container">
+            <div class="motto">
+                <h3 class="title text-dark"><b>이메일 인증 오류</b></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="main">
+        <!-- section -->
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-12 mr-auto">
+                        <div class="info info-horizontal">
+                            <h3 class="card-title"><b>기관용</b></h3>
+                            <div class="description">
+                                <h4> 로그인 하기 </h4>
+                                <p>이미 인증이 완료되었을 수도 있습니다. <a href="@Url.Action("LogIn", "Account")">로그인</a>이 되는지 확인해봅니다.</p>
+                            </div>
+                            <div class="description">
+                                <h4> 인증 이메일 재발송하기 </h4>
+                                <p>인증 신청을 다시 해보세요. 인증을 위한 <a href="@Url.Action("RegisterReAuth", "Account")">메일을 재발송</a>받아봅니다.</p>
+                            </div>
+                            <div class="description">
+                                <h4> 이메일 변경하기 </h4>
+                                <p>등록한 이메일을 <a href="@Url.Action("UpdateEmail", "Account")">다른 이메일 주소로 변경</a>해봅니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-12 mr-auto">
+                        <div class="info info-horizontal">
+                            <h3 class="card-title"><b>파견 교사용</b></h3>
+                            <div class="description">
+                                <h4> 로그인 하기 </h4>
+                                <p>이미 인증이 완료되었을 수도 있습니다. <a href="@Url.Action("LogIn", "Account", new { managerYn = true })">로그인</a>이 되는지 확인해봅니다.</p>
+                            </div>
+                            <div class="description">
+                                <h4> 인증 이메일 재발송하기 </h4>
+                                <p>인증 신청을 다시 해보세요. 인증을 위한 <a href="@Url.Action("RegisterReAuth", "Account", new { managerYn = true })">메일을 재발송</a>받아봅니다.</p>
+                            </div>
+                            <div class="description">
+                                <h4> 이메일 변경하기 </h4>
+                                <p>등록한 이메일을 <a href="@Url.Action("UpdateEmail", "Account", new { managerYn = true })">다른 이메일 주소로 변경</a>해봅니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

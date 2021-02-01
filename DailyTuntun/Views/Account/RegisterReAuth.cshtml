@@ -1,0 +1,75 @@
+﻿@model DailyTuntun.Models.MemberReAuthModel
+
+@{
+    ViewData["Title"] = "인증 이메일 재발송";
+
+    bool managerYn = (bool)ViewData["ManagerYn"];
+
+    var title = "인증 이메일 재발송";
+    var boxColor = "";
+
+    if (managerYn == true)
+    {
+        title = "교사 인증 이메일 재발송";
+        boxColor = "background-color: yellowgreen";
+    }
+}
+
+<div class="login-page full-screen">
+    <div class="wrapper">
+        <div class="page-header" style="background-image: url('/assets/img/main/main.jpg');">
+            @*<div class="filter"></div>*@
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto">
+                        <div class="card card-register" style="@boxColor">
+                            <h3 class="card-title"><b>@title</b></h3>
+                            <form class="register-form" name="registerform" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-controller="Account" asp-action="RegisterReAuth">
+                                <input asp-for="ManagerYn" type="hidden" value="@managerYn" />
+                                <div class="input-group-btn">
+                                    <label>사용자 이메일</label>
+                                    <input asp-for="UserEmail" type="text" class="form-control no-border">
+                                    <span asp-validation-for="UserEmail" class="text-danger"></span>
+                                </div>
+                                <div class="input-group-btn">
+                                    <label>비밀번호</label>
+                                    <input asp-for="UserPassword" type="password" class="form-control no-border">
+                                    <span asp-validation-for="UserPassword" class="text-danger"></span>
+                                </div>
+                                <input type="button" value="취소" onclick="location.href='@Url.Action("LogIn", "Account", new { managerYn = @managerYn })'" class="btn btn-outline-danger btn-block btn-round">
+                                <button type="button" id="onsubmit" onclick="onSubmit()" class="btn btn-danger btn-block btn-round" style="margin-top: 5px;">재발송</button>
+                            </form>
+                            <div class="text-center">
+                                <div asp-validation-summary="ModelOnly" class="text-black-50"></div>
+                            </div>
+                            <div class="text-center forgot">
+                                <a href="@Url.Action("LostPassword", "Account", new { managerYn = @managerYn })" class="btn btn-link btn-facebook"><u><b>비밀번호를 잊어버리셨나요?</b></u></a>
+                            </div>
+                            <div class="text-center forgot">
+                                <a href="@Url.Action("UpdateEmail", "Account", new { managerYn = @managerYn })" class="btn btn-link btn-facebook" style="margin-top: 0px;"><u><b>이메일을 바꾸실래요?</b></u></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        document.getElementById("UserEmail").focus();
+    }
+
+    $("#onsubmit").click(function () {
+        var submitBtn = $(this);
+        submitBtn.attr("disabled", true);
+        setTimeout(function () {
+            submitBtn.removeAttr("disabled");
+        }, 3000);
+    });
+
+    function onSubmit() {
+        document.registerform.submit();
+    }
+</script>
