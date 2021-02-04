@@ -88,7 +88,7 @@
                         </li>
                     }
 
-                    @if (controllerName == "Admin" && (actionName == "ConsultList" || actionName == "ConsultUpdate"))
+                    @*@if (controllerName == "Admin" && (actionName == "ConsultList" || actionName == "ConsultUpdate"))
                     {
                         <li class="active btn-magnify">
                             <a href="@Url.Action("ContentList", "Admin")">
@@ -105,28 +105,7 @@
                                 <p>Consult</p>
                             </a>
                         </li>
-                    }
-
-
-                    @*@if (controllerName == "Admin" && actionName == "CounselList")
-                        {
-                            <li class="active btn-magnify">
-                                <a href="@Url.Action("CounselList", "Admin", new { id = 1 })">
-                                    <i class="nc-icon nc-bank"></i>
-                                    <p>Dash Board</p>
-                                </a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="btn-magnify">
-                                <a href="@Url.Action("CounselList", "Admin", new { id = 1 })">
-                                    <i class="nc-icon nc-bank"></i>
-                                    <p>Dash Board</p>
-                                </a>
-                            </li>
-                        }*@
-
+                    }*@
 
                 </ul>
             </div>
@@ -194,7 +173,7 @@
                         <nav class="footer-nav">
                             <ul>
                                 <li>
-                                    <a href="https://player.tuntun.com/">Tuntun Player</a>
+                                    <a href="https://daily.tuntun.com/">Daily Tuntun</a>
                                 </li>
                             </ul>
                         </nav>

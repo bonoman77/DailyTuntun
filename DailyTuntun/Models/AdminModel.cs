@@ -76,6 +76,9 @@ namespace DailyTuntun.Models
         [Display(Name = "회원ID")]
         public string MemberID { get; set; }
 
+        [Display(Name = "회원코드")]
+        public string MemberCode { get; set; }
+
         [Display(Name = "이메일계정")]
         public string UserEmail { get; set; }
 

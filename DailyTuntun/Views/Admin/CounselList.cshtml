@@ -1,0 +1,168 @@
+﻿@model IEnumerable<DailyTuntun.Models.AdminMemberModel>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "상담관리";
+}
+
+<div class="content">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="consultForm" method="get" asp-action="CounselList" asp-controller="Admin">
+                        <input name="pNum" type="hidden" value="@ViewData["Page"]" />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="input-group no-border ">
+                                    <input type="text" name="searchText" value="@ViewData["SearchText"]" class="form-control" placeholder="이름/이메일 검색..." autofocus>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="input-group no-border ">
+                                    <button class="btn btn-success" type="submit" style="margin-top: 0px;"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">@ViewData["Title"]</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive-sm">
+                        <table class="table table-hover">
+                            <thead class="text-primary">
+                                <tr>
+                                    <th class="text-center" width="8%">회원ID</th>
+                                    <th class="text-center" width="10%">@Html.DisplayNameFor(model => model.MemberCode)</th>
+                                    <th class="text-center" width="15%">@Html.DisplayNameFor(model => model.MemberName)</th>
+                                    <th class="text-center" width="30%">@Html.DisplayNameFor(model => model.UserEmail)</th>
+                                    <th class="text-center" width="7%">@Html.DisplayNameFor(model => model.MemberType)</th>
+                                    <th class="text-center" width="5%">@Html.DisplayNameFor(model => model.AuthYn)</th>
+                                    <th class="text-center" width="10%">@Html.DisplayNameFor(model => model.CreateDate)</th>
+                                    <th class="text-center" width="10%">옵션</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Count() == 0)
+                                {
+                                    <tr>
+                                        <td class="text-center" colspan="7">
+                                            자료가 없습니다.
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="text-center" width="8%">
+                                                @Html.DisplayFor(modelItem => item.MemberID)
+                                            </td>
+                                            <td class="text-center" width="10%">
+                                                @Html.DisplayFor(modelItem => item.MemberCode)
+                                            </td>
+                                            <td class="text-center" width="15%">
+                                                <a href="@Url.Action("MemberUpdate", "Admin", new { memberId = item.MemberID })">
+                                                    @Html.DisplayFor(modelItem => item.MemberName)
+                                                </a>
+                                            </td>
+                                            <td class="text-center" width="30%">
+                                                @Html.DisplayFor(modelItem => item.UserEmail)
+                                            </td>
+                                            <td class="text-center" width="7%">
+                                                @Html.DisplayFor(modelItem => item.MemberType)
+                                            </td>
+                                            <td class="text-center" width="5%">
+                                                @Html.DisplayFor(modelItem => item.AuthYn)
+                                            </td>
+                                            <td class="text-center" width="10%">
+                                                @Html.DisplayFor(modelItem => item.CreateDate)
+                                            </td>
+                                            <td class="text-center" width="10%">
+                                                <button type="button" onclick="location.href='@Url.Action("MemberUpdate", "Admin", new { memberId = item.MemberID })';" class="btn btn-success btn-icon btn-sm">
+                                                    <i class="nc-icon nc-box"></i>
+                                                </button>
+                                                <button type="button" onclick="location.href='@Url.Action("MemberLogIn", "Admin", new { memberId = item.MemberID })';" class="btn btn-danger btn-icon btn-sm">
+                                                    <i class="nc-icon nc-button-play"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end content-->
+                </div>
+                <!--  end card  -->
+            </div>
+
+            <!-- PAGE NAVIGATION START -->
+            @{
+                string controllerName = ViewContext.RouteData.Values["Controller"].ToString();
+                string actionName = ViewContext.RouteData.Values["Action"].ToString();
+
+                var maxPage = (int)ViewData["NowPageStartNum"] + (int)ViewData["PageListSize"];
+            }
+
+            @if ((int)ViewData["NowPageStartNum"] + (int)ViewData["PageListSize"] >= (int)ViewData["EndPageNum"])
+            {
+                maxPage = (int)ViewData["EndPageNum"] + 1;
+            }
+
+            <nav aria-label="Page navigation">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="pagination">
+                            @if ((bool)ViewData["PrePageYn"] == true)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action(actionName, controllerName,  new {page=ViewData["PrePageButtonNum"], sDate=ViewData["StartDate"], eDate=ViewData["EndDate"], sText=ViewData["SearchText"]})">
+                                        <span aria-hidden="true"><i class="fa fa-angle-double-left" aria-hidden="true"></i></span>
+                                    </a>
+                                </li>
+                            }
+                            @for (int i = (int)ViewData["NowPageStartNum"]; i < @maxPage; i++)
+                            {
+                                @if ((int)ViewData["Page"] == i)
+                                {
+                                    <li class="page-item active"><a class="page-link" href="@Url.Action(actionName, controllerName, new {page=@i, sDate=ViewData["StartDate"], eDate=ViewData["EndDate"], sText=ViewData["SearchText"]})">@i</a></li>
+                                }
+                                else
+                                {
+                                    <li class="page-item"><a class="page-link" href="@Url.Action(actionName, controllerName, new {page=@i, sDate=ViewData["StartDate"], eDate=ViewData["EndDate"], sText=ViewData["SearchText"]})">@i</a></li>
+                                }
+                            }
+                            @if ((bool)ViewData["NextPageYn"] == true)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action(actionName, controllerName, new {page=ViewData["nextPageButtonNum"], sDate=ViewData["StartDate"], eDate=ViewData["EndDate"], sText=ViewData["SearchText"]})">
+                                        <span aria-hidden="true"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- PAGE NAVIGATION END -->
+            <!-- end col-md-12 -->
+        </div>
+        <!-- end row -->
+    </div>
+</div>
+
+
+
+
+
+

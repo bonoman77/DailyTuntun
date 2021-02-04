@@ -439,3 +439,4 @@ D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\ref\DailyTuntun.dll
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\DailyTuntun.pdb
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\DailyTuntun.genruntimeconfig.cache
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Account\SearchTeacherPartial.cshtml.g.cs
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Admin\CounselList.cshtml.g.cs
