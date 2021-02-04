@@ -5,8 +5,8 @@
         <span aria-hidden="true">&times;</span>
     </button>
 
-    <h3 class="modal-title text-center">프리스쿨 원코드 확인</h3>
-    <p>프리스쿨(http://www.tuntunpreschool.com/)의 계정을 확인하세요.</p>
+    <h3 class="modal-title text-center">프리스쿨 교사코드 확인</h3>
+    <p>프리스쿨몰(http://mall.tuntunpreschool.com/)의 계정을 확인하세요.</p>
 </div>
 
 <form name="searchform" id="searchform" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-controller="Account" asp-action="SearchMemberPartial">
@@ -44,18 +44,18 @@
 
         $.ajax({
             type: "POST",
-            url: "/Account/SearchMemberCheck",
+            url: "/Account/SearchTeacherCheck",
             data: $('#searchform').serialize(),
             success: function (result) {
                 if (result.success == true) {
                     $("#myModal").modal("hide");
                     document.getElementById("MemberCode").value = result.memberCode;
-                    document.getElementById("CorpName").value = result.corpName;
+                    document.getElementById("MemberName").value = result.memberName;
                 } else {
                     if (result.errorNum == 9) {
                         document.getElementById("searchResult").innerHTML = "확인되지 않는 계정입니다. 다시 확인해주세요.";
                     } else if (result.errorNum == 8) {
-                        document.getElementById("searchResult").innerHTML = "이미 등록되어있는 원코드입니다. 다시 확인해주세요.";
+                        document.getElementById("searchResult").innerHTML = "이미 등록되어있는 회원코드입니다. 다시 확인해주세요.";
                     }
                 }
 

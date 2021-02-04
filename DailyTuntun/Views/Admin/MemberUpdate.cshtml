@@ -1,5 +1,262 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model DailyTuntun.Models.AdminMemberDetailModel
+
 @{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "회원정보 상세";
+
+    int memberId = Convert.ToInt32(Model.MemberID);
 }
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">@ViewData["Title"]</h5>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("MemberUpdate", "Admin", FormMethod.Post))
+                    {
+
+                    @Html.HiddenFor(model => model.ManagerYn)
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="MemberID"></label>
+                                <input asp-for="MemberID" type="text" class="form-control" readonly>
+                                <span asp-validation-for="MemberID" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="MemberCode"></label>
+                                <input asp-for="MemberCode" type="text" class="form-control" readonly>
+                                <span asp-validation-for="MemberCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="MemberType"></label>
+                                <input asp-for="MemberType" type="text" class="form-control" readonly>
+                                <span asp-validation-for="MemberType" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @if (model.ManagerYn==true) {  
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="CorpName"></label>
+                                    <input asp-for="CorpName" type="text" class="form-control" readonly>
+                                    <span asp-validation-for="CorpName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="MemberName"></label>
+                                <input asp-for="MemberName" type="text" class="form-control" readonly>
+                                <span asp-validation-for="MemberName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="UserEmail"></label>
+                                <input asp-for="UserEmail" type="text" class="form-control" readonly>
+                                <span asp-validation-for="UserEmail" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="UserNewEmail"></label>
+
+                                <input asp-for="UserNewEmail" type="text" class="form-control" required>
+                                <div class="input-group-append">
+                                    <input type="submit" class="btn btn-info" value="이메일 변경" />
+                                </div>
+
+
+
+                                <span class="text-info">이메일 변경시 수신된 이메일을 통해 다시 인증해야 합니다.</span><br />
+                                <span asp-validation-for="UserNewEmail" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group text-right">
+                                <button type="button" class="btn btn-default" onclick="history.go(-1);">뒤로가기</button>
+                                <input type="button" class="btn btn-success" value="인증메일 재발송" onclick="javascript:reAuthEmail(@memberId)" />
+                                <input type="button" class="btn btn-warning" value="비밀번호 초기화" onclick="javascript:resetPassword(@memberId)" />
+                                <input type="button" class="btn btn-danger" value="탈퇴" onclick="javascript:deleteMember(@memberId);" />
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- searchMember modal -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="false">
+    <div class="modal-dialog modal-register">
+        <div class="modal-content" id="searchMemberModal">
+        </div>
+    </div>
+</div>
+
+<!-- outMember modal -->
+<div class="modal" id="myModalOut" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="false">
+    <div class="modal-dialog modal-register">
+        <div class="modal-content" id="outMemberModal">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var reAuthEmail = function (MemberID) {
+        swal({
+            title: '인증메일 재발송',
+            text: "인증 메일을 해당 회원에게 다시 보냅니다.",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            confirmButtonText: 'Send',
+            buttonsStyling: false
+        }).then(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/ReAuthEmail",
+                data: { memberId: MemberID },
+                success: function (result) {
+                    if (result.success == true) {
+                        swal({
+                            title: '인증메일 재발송 완료',
+                            text: '해당 회원에게 재인증을 위한 메일 확인을 요청해주세요.',
+                            type: 'success',
+                            confirmButtonClass: "btn btn-success",
+                            buttonsStyling: false
+                        }),
+                            setTimeout(function () {
+                                window.location.href = "/Admin/MemberList"
+                            }, 2000);
+                    } else {
+                        swal({
+                            title: '인증메일 재발송 실패',
+                            text: '개발사에 문의하세요.',
+                            type: 'error',
+                            confirmButtonClass: "btn btn-success",
+                            buttonsStyling: false
+                        })
+                    }
+                }
+            });
+        }).catch(swal.noop);
+    }
+
+    var resetPassword = function (MemberID) {
+        swal({
+            title: '비밀번호 초기화',
+            text: "비밀번호 재설정 진행 메일을 해당 회원에게 보냅니다.",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            confirmButtonText: 'Send',
+            buttonsStyling: false
+        }).then(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/ResetPassword",
+                data: { memberId: MemberID },
+                success: function (result) {
+                    if (result.success == true) {
+                        swal({
+                            title: '비밀번호 초기화 완료',
+                            text: '해당 회원에게 비밀번호 재설정을 위한 메일 확인을 요청해주세요.',
+                            type: 'success',
+                            confirmButtonClass: "btn btn-success",
+                            buttonsStyling: false
+                        }),
+                            setTimeout(function () {
+                                window.location.href = "/Admin/MemberList"
+                            }, 2000);
+                    } else {
+                        swal({
+                            title: '비밀번호 초기화 실패',
+                            text: '개발사에 문의하세요.',
+                            type: 'error',
+                            confirmButtonClass: "btn btn-danger",
+                            buttonsStyling: false
+                        })
+                    }
+                }
+            });
+        }).catch(swal.noop);
+    }
+
+    var deleteMember = function (MemberID) {
+        swal({
+            title: '탈퇴',
+            text: "해당 회원의 탈퇴를 정말로 진행하시겠습니까?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            confirmButtonText: 'Commit',
+            buttonsStyling: false
+        }).then(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/DeleteMember",
+                data: { memberId: MemberID },
+                success: function (result) {
+                    if (result.success == true) {
+                        swal({
+                            title: '탈퇴처리 완료',
+                            text: '더이상 해당 회원은 로그인할 수 없습니다.',
+                            type: 'success',
+                            confirmButtonClass: "btn btn-success",
+                            buttonsStyling: false
+                        }),
+                            setTimeout(function () {
+                                window.location.href = "/Admin/MemberList"
+                            }, 2000);
+                    } else {
+                        swal({
+                            title: '탈퇴처리 실패',
+                            text: '개발사에 문의하세요.',
+                            type: 'error',
+                            confirmButtonClass: "btn btn-danger",
+                            buttonsStyling: false
+                        })
+                    }
+                }
+            })
+        }).catch(swal.noop);
+    }
+
+</script>
+
+
+
+

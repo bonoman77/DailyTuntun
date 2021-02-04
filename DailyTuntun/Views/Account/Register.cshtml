@@ -9,7 +9,7 @@
     <div class="content-center">
         <div class="container">
             <div class="motto">
-                <h3 class="title text-dark"><b>기관 등록을 환영합니다.</b></h3>
+                <h3 class="title text-dark"><b>원 등록을 환영합니다.</b></h3>
             </div>
         </div>
     </div>
@@ -18,7 +18,7 @@
 <div class="main">
     <div class="section">
         <div class="container">
-            <h3>기관 등록</h3>
+            <h3>원 등록</h3>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <br />
             <form name="registerform" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-controller="Account" asp-action="Register">
@@ -32,14 +32,21 @@
                             <div class="input-group">
                                 <input asp-for="MemberCode" type="text" class="form-control border-input" readonly>
                                 <div class="input-group-append">
-                                    <button type="button" class="btn" onclick="javascript:simpleSearch();" style="border-bottom-width: 0px;" data-toggle="modal" data-target="#loginModal">
-                                        <i class="nc-icon nc-zoom-split"></i> 기관코드찾기
+                                    <button type="button" class="btn" onclick="javascript:memberSearch();" style="border-bottom-width: 0px;" data-toggle="modal" data-target="#loginModal">
+                                        <i class="nc-icon nc-zoom-split"></i> 원코드 찾기
                                     </button>
                                 </div>
                             </div>
                             <span asp-validation-for="MemberCode" class="text-danger"></span>
                         </div>
-
+                        <div class="form-group">
+                            <h6>
+                                <label asp-for="CorpName" class="control-label"></label>
+                                <span class="icon-danger">*</span>
+                            </h6>
+                            <input asp-for="CorpName" type="text" class="form-control border-input" readonly>
+                            <span asp-validation-for="CorpName" class="text-danger"></span>
+                        </div>
                         <div class="form-group">
                             <h6>
                                 <label asp-for="MemberName" class="control-label"></label>
@@ -135,7 +142,7 @@
 
 <script type="text/javascript">
 
-    var simpleSearch = function () {
+    var memberSearch = function () {
         $("#searchMemberModal").load("/Account/SearchMemberPartial",
             function () {
                 $("#myModal").modal("show");

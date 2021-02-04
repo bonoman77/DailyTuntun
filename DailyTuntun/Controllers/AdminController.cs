@@ -32,7 +32,7 @@ namespace DailyTuntun.Controllers
 
             DynamicParameters paramManager = new DynamicParameters();
             paramManager.Add("@MemberID", memberId);
-            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetStreamMemberAdminYn", paramManager);
+            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberAdminYn", paramManager);
 
             if (adminYn != true)
             {
@@ -57,7 +57,7 @@ namespace DailyTuntun.Controllers
 
             DynamicParameters paramManager = new DynamicParameters();
             paramManager.Add("@MemberID", memberId);
-            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetStreamMemberAdminYn", paramManager);
+            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberAdminYn", paramManager);
 
             if (adminYn != true)
             {
@@ -69,7 +69,7 @@ namespace DailyTuntun.Controllers
 
             DynamicParameters paramCnt = new DynamicParameters();
             paramCnt.Add("@SearchText", searchText);
-            var listCnt = DapperORM.ExecuteReturn<AdminMemberCntModel>("uspGetStreamAdminMemberCnt", paramCnt);
+            var listCnt = DapperORM.ExecuteReturn<AdminMemberCntModel>("uspGetDailyAdminMemberCnt", paramCnt);
 
             var pageSize = 30;
 
@@ -90,7 +90,7 @@ namespace DailyTuntun.Controllers
             param.Add("@PageSize", Common.PageSize);
             param.Add("@pageNumber", page);
             param.Add("@SearchText", searchText);
-            return View(DapperORM.ReturnList<AdminMemberModel>("uspGetStreamAdminMemberList", param));
+            return View(DapperORM.ReturnList<AdminMemberModel>("uspGetDailyAdminMemberList", param));
         }
 
         [HttpGet]
@@ -108,7 +108,7 @@ namespace DailyTuntun.Controllers
 
             DynamicParameters paramManager = new DynamicParameters();
             paramManager.Add("@MemberID", memberId);
-            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetStreamMemberAdminYn", paramManager);
+            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberAdminYn", paramManager);
 
             if (adminYn != true)
             {
@@ -117,32 +117,21 @@ namespace DailyTuntun.Controllers
 
             DynamicParameters param = new DynamicParameters();
             param.Add("@MemberID", memberId);
-            return View(DapperORM.ReturnList<AdminMemberCounselModel>("uspGetStreamAdminMemberCounselOneList", param));
+            return View(DapperORM.ReturnList<AdminMemberCounselModel>("uspGetDailyAdminMemberCounselOneList", param));
         }
 
 
         [HttpGet]
         public IActionResult MemberUpdate(int memberId)
         {
-            //ViewData["Page"] = page;
-            //ViewData["SearchText"] = searchText;
-
-            DynamicParameters paramMember = new DynamicParameters();
-            paramMember.Add("@MemberID", memberId);
-            ViewBag.MemberList = DapperORM.ReturnList<AdminMemberDetailModel>("uspGetStreamMemberCodeList", paramMember);
-
             DynamicParameters param = new DynamicParameters();
             param.Add("@MemberID", memberId);
-            return View(DapperORM.ExecuteReturn<AdminMemberDetailModel>("uspGetStreamMemberDetail", param));
+            return View(DapperORM.ExecuteReturn<AdminMemberDetailModel>("uspGetDailyMemberDetail", param));
         }
 
         [HttpPost]
         public IActionResult MemberUpdate(AdminMemberDetailModel model)
         {
-            DynamicParameters paramMember = new DynamicParameters();
-            paramMember.Add("@MemberID", model.MemberID);
-            ViewBag.MemberList = DapperORM.ReturnList<AdminMemberDetailModel>("uspGetStreamMemberCodeList", paramMember);
-
             if (ModelState.IsValid)
             {
                 try
@@ -155,7 +144,7 @@ namespace DailyTuntun.Controllers
                     param.Add("@UserEmail", model.UserEmail);
                     param.Add("@UserNewEmail", model.UserNewEmail);
                     param.Add("@AuthCode", authCode);
-                    var returnVal = DapperORM.ExecuteReturn<int>("uspSetStreamAdminMemberEmailUpdate", param);
+                    var returnVal = DapperORM.ExecuteReturn<int>("uspSetDailyAdminMemberEmailUpdate", param);
 
                     if (returnVal == 1)
                     {
@@ -198,7 +187,7 @@ namespace DailyTuntun.Controllers
 
             DynamicParameters paramManager = new DynamicParameters();
             paramManager.Add("@MemberID", memberId);
-            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetStreamMemberAdminYn", paramManager);
+            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberAdminYn", paramManager);
 
             if (adminYn != true)
             {
@@ -210,7 +199,7 @@ namespace DailyTuntun.Controllers
 
             DynamicParameters paramCnt = new DynamicParameters();
             paramCnt.Add("@SearchText", searchText);
-            var listCnt = DapperORM.ExecuteReturn<AdminMemberCntModel>("uspGetStreamAdminMemberCounselCnt", paramCnt);
+            var listCnt = DapperORM.ExecuteReturn<AdminMemberCntModel>("uspGetDailyAdminMemberCounselCnt", paramCnt);
 
             var pageSize = 30;
 
@@ -231,7 +220,7 @@ namespace DailyTuntun.Controllers
             param.Add("@PageSize", Common.PageSize);
             param.Add("@pageNumber", page);
             param.Add("@SearchText", searchText);
-            return View(DapperORM.ReturnList<AdminMemberModel>("uspGetStreamAdminMemberCounselList", param));
+            return View(DapperORM.ReturnList<AdminMemberModel>("uspGetDailyAdminMemberCounselList", param));
         }
 
         [HttpGet]
@@ -281,7 +270,7 @@ namespace DailyTuntun.Controllers
 
                 DynamicParameters paramInfo = new DynamicParameters();
                 paramInfo.Add("@MemberID", memberId);
-                var joinInfo = DapperORM.ReturnList<AdminMemberBasicModel>("uspGetStreamAdminMemberBasicInfo", paramInfo).FirstOrDefault<AdminMemberBasicModel>();
+                var joinInfo = DapperORM.ReturnList<AdminMemberBasicModel>("uspGetDailyAdminMemberBasicInfo", paramInfo).FirstOrDefault<AdminMemberBasicModel>();
 
                 if (joinInfo == null)
                     isValid = false;
@@ -289,7 +278,7 @@ namespace DailyTuntun.Controllers
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@MemberID", memberId);
                 param.Add("@AuthCode", authCode);
-                var join = DapperORM.ExecuteReturn<int>("uspSetStreamAdminMemberEmailReAuthRequest", param);
+                var join = DapperORM.ExecuteReturn<int>("uspSetDailyAdminMemberEmailReAuthRequest", param);
 
                 if (join == 0)
                 {
@@ -321,7 +310,7 @@ namespace DailyTuntun.Controllers
 
                 DynamicParameters paramInfo = new DynamicParameters();
                 paramInfo.Add("@MemberID", memberId);
-                var joinInfo = DapperORM.ReturnList<AdminMemberBasicModel>("uspGetStreamAdminMemberBasicInfo", paramInfo).FirstOrDefault<AdminMemberBasicModel>();
+                var joinInfo = DapperORM.ReturnList<AdminMemberBasicModel>("uspGetDailyAdminMemberBasicInfo", paramInfo).FirstOrDefault<AdminMemberBasicModel>();
 
                 if (joinInfo == null)
                     isValid = false;
@@ -329,7 +318,7 @@ namespace DailyTuntun.Controllers
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@MemberID", memberId);
                 param.Add("@AuthCode", authCode);
-                var join = DapperORM.ExecuteReturn<int>("uspSetStreamAdmimMemberPassReset", param);
+                var join = DapperORM.ExecuteReturn<int>("uspSetDailyAdmimMemberPassReset", param);
 
                 if (join == 0)
                 {
@@ -362,38 +351,63 @@ namespace DailyTuntun.Controllers
             {
                 param.Add("@DeleteMemberID", deleteMemberId);
             }
-            DapperORM.ExecuteWithoutReturn("uspSetStreamMemberOut", param);
+            DapperORM.ExecuteWithoutReturn("uspSetDailyMemberOut", param);
 
             var result = true;
             return Json(result);
         }
 
 
-
         [HttpGet]
-        public IActionResult ContentList()
+        [AllowAnonymous]
+        public async Task<IActionResult> MemberLogIn(int memberId)
         {
-            int memberId = 0;
-
-            if (User.Identity.IsAuthenticated)
-                memberId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-            if (memberId == 0)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("LogIn", "Account", new { managerYn = true });
+
+                var isValid = true;
+
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@MemberID", memberId);
+                var join = DapperORM.ReturnList<MemberLogInModel>("uspGetDailyAdminMemberLogIn", param).FirstOrDefault<MemberLogInModel>();
+
+                if (join == null)
+                    isValid = false;
+
+                if (!isValid)
+                {
+                    ModelState.AddModelError("", "계정을 다시 확인해주세요.");
+                    return View();
+                }
+
+                if (join.AuthYn == false)
+                {
+                    ModelState.AddModelError("", string.Format("앞서 등록하신 {0} 을 확인하고 먼저 인증을 해주세요.", join.UserEmail));
+                    return View();
+                }
+
+                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, join.MemberID.ToString()));
+                identity.AddClaim(new Claim(ClaimTypes.Name, join.MemberName));
+                identity.AddClaim(new Claim("MemberID", join.MemberID.ToString()));
+                identity.AddClaim(new Claim("ManagerYn", join.ManagerYn.ToString()));
+
+                // Authenticate using the identity
+                var principal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme
+                    , principal
+                    , new AuthenticationProperties
+                    {
+                        ExpiresUtc = DateTime.UtcNow.AddDays(3),
+                    });
+
+                return RedirectToAction("Index", "Home");
             }
 
-            DynamicParameters paramManager = new DynamicParameters();
-            paramManager.Add("@MemberID", memberId);
-            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetStreamMemberAdminYn", paramManager);
-
-            if (adminYn != true)
-            {
-                return RedirectToAction("AdminAuthError", "Admin");
-            }
-
-            return View(DapperORM.ReturnList<AdminContentModel>("uspGetStreamAdminContentList"));
+            return View();
         }
+
 
 
 

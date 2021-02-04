@@ -33,7 +33,7 @@
                                 <div class="input-group">
                                     <input asp-for="MemberCode" type="text" class="form-control border-input" readonly>
                                     <div class="input-group-append">
-                                        <button type="button" class="btn" onclick="javascript:simpleSearch();" style="border-bottom-width: 0px;" data-toggle="modal" data-target="#loginModal">
+                                        <button type="button" class="btn" onclick="javascript:teacherSearch();" style="border-bottom-width: 0px;" data-toggle="modal" data-target="#loginModal">
                                             <i class="nc-icon nc-zoom-split"></i> 교사코드찾기
                                         </button>
                                     </div>
@@ -46,7 +46,7 @@
                                     <label asp-for="MemberName" class="control-label">교사 이름</label>
                                     <span class="icon-danger">*</span>
                                 </h6>
-                                <input asp-for="MemberName" type="text" class="form-control border-input">
+                                <input asp-for="MemberName" type="text" class="form-control border-input" readonly>
                                 <span asp-validation-for="MemberName" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -113,7 +113,28 @@
     </div>
 </div>
 
+<!-- searchMember modal -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="false">
+    <div class="modal-dialog modal-register">
+        <div class="modal-content" id="searchTeacherModal">
+        </div>
+    </div>
+</div>
+
+
 <script type="text/javascript">
+
+    var teacherSearch = function () {
+        $("#searchTeacherModal").load("/Account/SearchTeacherPartial",
+            function () {
+                $("#myModal").modal("show");
+                $("#myModal").on('shown.bs.modal', function () {
+                    $("#Account").focus();
+                });
+            }
+        );
+    }
+
     $("#onsubmit").click(function () {
         var submitBtn = $(this);
         submitBtn.attr("disabled", true);

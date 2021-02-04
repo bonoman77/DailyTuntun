@@ -102,7 +102,7 @@ namespace DailyTuntun.Controllers
 
             if (AuthType == AuthTypeId.Registor)
             {
-                string authURL = "https://player.tuntun.com/Account/RegisterAuth?email=" + userEmail + "&authCode=" + authCode + "&managerYn=" + managerYn;
+                string authURL = "https://daily.tuntun.com/Account/RegisterAuth?email=" + userEmail + "&authCode=" + authCode + "&managerYn=" + managerYn;
 
                 subject = "DAILY 튼튼 가입을 환영합니다.";
 
@@ -113,7 +113,7 @@ namespace DailyTuntun.Controllers
             }
             else if (AuthType == AuthTypeId.ReAuth || AuthType == AuthTypeId.UpdateEmail)
             {
-                string authURL = "https://player.tuntun.com/Account/RegisterAuth?email=" + userEmail + "&authCode=" + authCode + "&managerYn=" + managerYn;
+                string authURL = "https://daily.tuntun.com/Account/RegisterAuth?email=" + userEmail + "&authCode=" + authCode + "&managerYn=" + managerYn;
 
                 subject = "DAILY 튼튼 재인증 메일입니다.";
 
@@ -125,7 +125,7 @@ namespace DailyTuntun.Controllers
             }
             else if (AuthType == AuthTypeId.LostPass)
             {
-                string authURL = "https://player.tuntun.com/Account/UpdatePassword?email=" + userEmail + "&authCode=" + authCode + "&managerYn=" + managerYn;
+                string authURL = "https://daily.tuntun.com/Account/UpdatePassword?email=" + userEmail + "&authCode=" + authCode + "&managerYn=" + managerYn;
 
                 subject = "DAILY 튼튼 비밀번호를 변경해주세요.";
 
@@ -144,7 +144,7 @@ namespace DailyTuntun.Controllers
             SmtpClient client = new SmtpClient();
 
             client.Connect("smtp.gmail.com", 465, true);
-            client.Authenticate("tuntunenglish.it@gmail.com", "xmsxmsduddj$$4");
+            client.Authenticate("tuntunenglish.it@gmail.com", "#xmsxmsduddj##3");
 
             client.Send(message);
             client.Disconnect(true);

@@ -115,7 +115,7 @@
                                 </div>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-danger" aria-labelledby="navbarDropdownMenuLink1">
                                     <a class="dropdown-item" href="@Url.Action("UserUpdate", "Account")">
-                                        기관정보 변경
+                                        원정보 변경
                                     </a>
                                 </div>
                             </li>
@@ -152,7 +152,7 @@
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link text-dark" href="@Url.Action("Register", "Account")" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
-                                    기관 등록
+                                    원 등록
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
@@ -188,14 +188,13 @@
                                     <a href="@Url.Action("TeacherRegister", "Account", new { managerYn = true })">교사 등록</a>
                                 </li>
                             }
-                            @*if (managerYn == true)
+                            if (managerYn == true)
                             {
                                 <li>
                                     <a href="@Url.Action("Index", "Admin")">관리자 모드</a>
                                 </li>
 
-                            }*@
-
+                            }
                         }
 
                         <li>

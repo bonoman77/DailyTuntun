@@ -438,3 +438,4 @@ D:\Development\DailyTuntun\DailyTuntun\obj\Debug\net5.0\Razor\Views\Product\Titl
 D:\Development\DailyTuntun\DailyTuntun\obj\Debug\net5.0\Razor\Views\Shared\_AdminLayout.cshtml.g.cs
 D:\Development\DailyTuntun\DailyTuntun\obj\Debug\net5.0\Razor\Views\Product\ContentAuthError.cshtml.g.cs
 D:\Development\DailyTuntun\DailyTuntun\obj\Debug\net5.0\Razor\Views\Account\SearchMemberPartial.cshtml.g.cs
+D:\Development\DailyTuntun\DailyTuntun\obj\Debug\net5.0\Razor\Views\Account\SearchTeacherPartial.cshtml.g.cs

@@ -30,7 +30,7 @@ namespace DailyTuntun.Models
     public class MemberRegisterModel
     {
         [Required(ErrorMessage = "등록된 코드를 검색하세요.")]
-        [Display(Name = "기관 코드")]
+        [Display(Name = "원 코드")]
         public string MemberCode { get; set; }
 
         [Display(Name = "이메일 아이디")]
@@ -55,7 +55,8 @@ namespace DailyTuntun.Models
         [Required(ErrorMessage = "회원이름을 입력하세요.")]
         public string MemberName { get; set; }
 
-        [Display(Name = "서비스 종류")]
+        [Display(Name = "원 이름")]
+        public string CorpName { get; set; }
 
         public bool AuthYn { get; set; }
     }
@@ -65,12 +66,15 @@ namespace DailyTuntun.Models
         public string MemberID { get; set; }
 
         [Required(ErrorMessage = "등록된 코드를 검색하세요.")]
-        [Display(Name = "기관 코드")]
+        [Display(Name = "원 코드")]
         public string MemberCode { get; set; }
 
         [Required(ErrorMessage = "회원 이름을 입력하세요.")]
         [Display(Name = "회원 이름")]
         public string MemberName { get; set; }
+
+        [Display(Name = "원 이름")]
+        public string CorpName { get; set; }
 
         [Display(Name = "이메일 아이디")]
         [Required(ErrorMessage = "이메일 아이디를 입력하세요.")]
@@ -95,6 +99,7 @@ namespace DailyTuntun.Models
         [DataType(DataType.Password)]
         [Compare("NewPassword", ErrorMessage = "두 개의 암호 입력이 일치해야 합니다.")]
         public string ConfirmPassword { get; set; }
+        public bool ManagerYn { get; set; }
     }
 
     public class MemberEmailModel
@@ -168,8 +173,8 @@ namespace DailyTuntun.Models
         [Required(ErrorMessage = "등록된 회원 이름을 입력하세요.")]
         public string MemberName { get; set; }
 
-        [Display(Name = "기관 코드")]
-        [Required(ErrorMessage = "등록된 기관 코드를 입력하세요.")]
+        [Display(Name = "원 코드")]
+        [Required(ErrorMessage = "등록된 원 코드를 입력하세요.")]
         public string MemberCode { get; set; }
         public bool ManagerYn { get; set; }
     }

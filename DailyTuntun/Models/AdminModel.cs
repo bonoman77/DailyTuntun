@@ -11,6 +11,9 @@ namespace DailyTuntun.Models
         [Display(Name = "회원ID")]
         public int MemberID { get; set; }
 
+        [Display(Name = "회원코드")]
+        public string MemberCode { get; set; }
+
         [Display(Name = "회원명")]
         public string MemberName { get; set; }
 
@@ -45,11 +48,11 @@ namespace DailyTuntun.Models
         [Display(Name = "회원코드")]
         public string MemberCode { get; set; }
 
+        [Display(Name = "원이름")]
+        public string CorpName { get; set; }
+
         [Display(Name = "회원이름")]
         public string MemberName { get; set; }
-
-        [Display(Name = "관리자여부")]
-        public bool ManagerYn { get; set; }
 
         [Display(Name = "회원타입")]
         public string MemberType { get; set; }
@@ -62,7 +65,7 @@ namespace DailyTuntun.Models
         [EmailAddress]
         [StringLength(100, ErrorMessage = "이메일은 100자를 넘을 수 없습니다.")]
         public string UserNewEmail { get; set; }
-
+        public bool ManagerYn { get; set; }
     }
 
     public class AdminMemberCounselModel

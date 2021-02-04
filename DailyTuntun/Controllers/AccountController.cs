@@ -126,6 +126,7 @@ namespace DailyTuntun.Controllers
                     param.Add("@UserPassword", model.UserPassword);
                     param.Add("@MemberCode", model.MemberCode);
                     param.Add("@MemberName", model.MemberName);
+                    param.Add("@CorpName", model.CorpName);
                     param.Add("@AuthCode", authCode);
                     param.Add("@ManagerYn", 0);
                     var returnVal = DapperORM.ExecuteReturn<int>("uspSetDailyMemberInsert", param);
@@ -539,6 +540,14 @@ namespace DailyTuntun.Controllers
             return PartialView();
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public PartialViewResult SearchTeacherPartial()
+        {
+            return PartialView();
+        }
+
+
         [HttpPost]
         [AllowAnonymous]
         public JsonResult SearchMemberCheck(MemberSearchCodeModel model)
@@ -550,6 +559,43 @@ namespace DailyTuntun.Controllers
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@Account", model.Account);
                 param.Add("@Password", model.Password);
+                param.Add("@ManagerYn", 0);
+                var join = DapperORM.ReturnList<MemberSearchCodeModel>("uspGetDailyMemberSearchMemberCode", param).FirstOrDefault<MemberSearchCodeModel>();
+
+                if (join == null)
+                    isValid = false;
+
+                if (!isValid)
+                {
+                    return Json(new { success = false, errorNum = 9 });
+                }
+
+                if (join.ErrorNum > 0)
+                {
+                    return Json(new { success = false, errorNum = join.ErrorNum });
+                }
+
+                ViewData["MemberCode"] = join.MemberCode;
+                ViewData["CorpName"] = join.MemberName;
+
+                return Json(new { success = true, memberCode = join.MemberCode, corpName = join.MemberName });
+            }
+            return Json(model);
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public JsonResult SearchTeacherCheck(MemberSearchCodeModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var isValid = true;
+
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@Account", model.Account);
+                param.Add("@Password", model.Password);
+                param.Add("@ManagerYn", 1);
                 var join = DapperORM.ReturnList<MemberSearchCodeModel>("uspGetDailyMemberSearchMemberCode", param).FirstOrDefault<MemberSearchCodeModel>();
 
                 if (join == null)
@@ -572,6 +618,7 @@ namespace DailyTuntun.Controllers
             }
             return Json(model);
         }
+
 
         [HttpGet]
         [AllowAnonymous]
