@@ -37,7 +37,7 @@
 
     if (contentGroupId == 1)
     {
-        bgComment = "규리와 함께 슈퍼히어로가 되어 문제를 해결하며 즐겁게 발화하는"; 
+        bgComment = "규리와 함께 슈퍼히어로가 되어 문제를 해결하며 즐겁게 발화하는";
     }
 
     string colSize = "col-md-3 col-sm-6";
@@ -51,9 +51,9 @@
 
 }
 
-<div class="page-header page-header-small" style="background-image: url('@bgPath');background-position: center 5%;">
+<div class="page-header page-header-small" style="background-image: url('@bgPath');background-position: center center;">
     @*<div class="filter"></div>*@
-    <div class="content-center">
+    <div class="content-center sub-center">
         <div class="container">
             <div class="motto">
                 <div class="description">
@@ -61,14 +61,14 @@
                 </div>
                 <br />
                 <div class="description text-dark-berry"><b>@bgComment</b></div>
-                <h5 class="description text-dark-berry">@comment</h5>
+                <h5 class="description text-sub-title">@comment</h5>
             </div>
         </div>
     </div>
 </div>
 
 <div class="main">
-    <div class="wrapper">
+    <div class="wrapper boardgame">
         <!-- section -->
         <div class="section section-blog">
             <div class="container">
@@ -94,7 +94,7 @@
 
                                         @if (memberId == 0 || authYn == true)
                                         {
-                                            <a href="@Url.Action("ContentList", "Product", new { productKindId = item.ProductKindID, contentTitleId = item.ContentTitleID })">
+                                            <a href="@Url.Action("ContentMapList", "Product", new { productKindId = item.ProductKindID, contentTitleId = item.ContentTitleID })">
                                                 <img src="@Html.DisplayFor(modelItem => item.ContentImageURL)" alt="Rounded Image" class="img-thumbnail img-no-padding img-responsive">
                                             </a>
                                         }

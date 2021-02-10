@@ -70,6 +70,7 @@ namespace DailyTuntun.Controllers
                 identity.AddClaim(new Claim(ClaimTypes.Name, join.MemberName));
                 identity.AddClaim(new Claim("MemberID", join.MemberID.ToString()));
                 identity.AddClaim(new Claim("ManagerYn", join.ManagerYn.ToString()));
+                identity.AddClaim(new Claim("ResponsiveYn", join.ResponsiveYn.ToString()));
 
                 // Authenticate using the identity
                 var principal = new ClaimsPrincipal(identity);
@@ -310,6 +311,43 @@ namespace DailyTuntun.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public IActionResult UserOptionUpdate()
+        {
+            int memberId = 0;
+            bool responsiveYn = false; 
+
+            if (User.Identity.IsAuthenticated)
+            {
+                memberId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            }
+
+            DynamicParameters paramManager = new DynamicParameters();
+            paramManager.Add("@MemberID", memberId);
+            responsiveYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberResponsiveYn", paramManager);
+
+            ViewData["MemberID"] = memberId;
+            ViewData["ResponsiveYn"] = responsiveYn;
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult UserOptionUpdate(MemberOptionModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@MemberID", model.MemberID);
+                param.Add("@ResponsiveYn", model.ResponsiveYn);
+                DapperORM.ExecuteWithoutReturn("uspSetDailyMemberOptionUpdate", param);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
 
         [HttpGet]
         [AllowAnonymous]

@@ -440,3 +440,9 @@ D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\DailyTuntun.pdb
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\DailyTuntun.genruntimeconfig.cache
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Account\SearchTeacherPartial.cshtml.g.cs
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Admin\CounselList.cshtml.g.cs
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Account\UserOptionUpdate.cshtml.g.cs
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Admin\CounselRegister.cshtml.g.cs
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Admin\CounselUpdate.cshtml.g.cs
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Admin\MemberCounselList.cshtml.g.cs
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Home\VersionHistory.cshtml.g.cs
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Product\ContentMapLIst.cshtml.g.cs

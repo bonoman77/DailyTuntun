@@ -25,6 +25,7 @@ namespace DailyTuntun.Models
         public string MemberName { get; set; }
         public bool ManagerYn { get; set; }
         public bool AuthYn { get; set; }
+        public bool ResponsiveYn { get; set; }
     }
 
     public class MemberRegisterModel
@@ -100,6 +101,15 @@ namespace DailyTuntun.Models
         [Compare("NewPassword", ErrorMessage = "두 개의 암호 입력이 일치해야 합니다.")]
         public string ConfirmPassword { get; set; }
         public bool ManagerYn { get; set; }
+    }
+
+
+
+    public class MemberOptionModel
+    {
+        public string MemberID { get; set; }
+
+        public bool ResponsiveYn { get; set; }
     }
 
     public class MemberEmailModel

@@ -1,0 +1,67 @@
+﻿@model DailyTuntun.Models.MemberOptionModel
+
+@{
+    ViewData["Title"] = "컨텐츠 사용화면 변경";
+
+    int memberId = (int)ViewData["MemberID"];
+    bool responsiveYn = (bool)ViewData["ResponsiveYn"];
+}
+
+<div class="page-header page-header-xs" style="background-image: url('/assets/img/sub/bg_sub.png');">
+    @*<div class="filter"></div>*@
+    <div class="content-center">
+        <div class="container">
+            <div class="motto">
+                <h3 class="title text-dark"><b>화면 구성을 변경합니다.</b></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="main">
+    <div class="section">
+        <div class="container">
+            <h3>화면 구성 변경</h3>
+            <br />
+            <form name="UserOptionUpdate" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-controller="Account" asp-action="UserOptionUpdate">
+                <input type="hidden" name="MemberID" id="MemberID" value=@memberId />
+
+                <div class="row">
+                    <div class="col-md-7 col-sm-7">
+
+                        <label></label>
+                        <ul class="notifications">
+                            <li class="notification-item">
+                                학습 페이지를 반응형 웹으로 설정
+                                @if (responsiveYn == true)
+                                {
+                                    <input asp-for="ResponsiveYn" type="checkbox" data-toggle="switch" data-on-color="info" data-off-color="info" checked>
+                                }
+                                else
+                                {
+                                    <input asp-for="ResponsiveYn" type="checkbox" data-toggle="switch" data-on-color="info" data-off-color="info">
+                                }
+                                <span class="toggle"></span>
+                            </li>
+                            @*<li class="notification-item">
+                                Weekly newsletter
+                                <input type="checkbox" data-toggle="switch" checked="" data-on-color="info" data-off-color="info">
+                                <span class="toggle"></span>
+                            </li>*@
+                        </ul>
+                    </div>
+                </div>
+                <br /><br />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row buttons-row">
+                    <div class="col-md-2 col-sm-2">
+                        <input type="submit" value="적용" class="btn btn-primary btn-block btn-round">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

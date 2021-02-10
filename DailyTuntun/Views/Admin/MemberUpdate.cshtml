@@ -19,94 +19,106 @@
                     @using (Html.BeginForm("MemberUpdate", "Admin", FormMethod.Post))
                     {
 
-                    @Html.HiddenFor(model => model.ManagerYn)
+                        @Html.HiddenFor(model => model.ManagerYn)
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label asp-for="MemberID"></label>
-                                <input asp-for="MemberID" type="text" class="form-control" readonly>
-                                <span asp-validation-for="MemberID" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label asp-for="MemberCode"></label>
-                                <input asp-for="MemberCode" type="text" class="form-control" readonly>
-                                <span asp-validation-for="MemberCode" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label asp-for="MemberType"></label>
-                                <input asp-for="MemberType" type="text" class="form-control" readonly>
-                                <span asp-validation-for="MemberType" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-                    @if (Model.ManagerYn == false) {
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label asp-for="CorpName"></label>
-                                    <input asp-for="CorpName" type="text" class="form-control" readonly>
-                                    <span asp-validation-for="CorpName" class="text-danger"></span>
+                                    <label asp-for="MemberID"></label>
+                                    <input asp-for="MemberID" type="text" class="form-control" readonly>
+                                    <span asp-validation-for="MemberID" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
-                    }
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label asp-for="MemberName"></label>
-                                <input asp-for="MemberName" type="text" class="form-control" readonly>
-                                <span asp-validation-for="MemberName" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label asp-for="UserEmail"></label>
-                                <input asp-for="UserEmail" type="text" class="form-control" readonly>
-                                <span asp-validation-for="UserEmail" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label asp-for="UserNewEmail"></label>
-
-                                <input asp-for="UserNewEmail" type="text" class="form-control" required>
-                                <div class="input-group-append">
-                                    <input type="submit" class="btn btn-info" value="이메일 변경" />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="MemberCode"></label>
+                                    <input asp-for="MemberCode" type="text" class="form-control" readonly>
+                                    <span asp-validation-for="MemberCode" class="text-danger"></span>
                                 </div>
-
-
-
-                                <span class="text-info">이메일 변경시 수신된 이메일을 통해 다시 인증해야 합니다.</span><br />
-                                <span asp-validation-for="UserNewEmail" class="text-danger"></span>
                             </div>
                         </div>
-                    </div>
-                    <br />
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group text-right">
-                                <button type="button" class="btn btn-default" onclick="history.go(-1);">뒤로가기</button>
-                                <input type="button" class="btn btn-success" value="인증메일 재발송" onclick="javascript:reAuthEmail(@memberId)" />
-                                <input type="button" class="btn btn-warning" value="비밀번호 초기화" onclick="javascript:resetPassword(@memberId)" />
-                                <input type="button" class="btn btn-danger" value="탈퇴" onclick="javascript:deleteMember(@memberId);" />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="MemberType"></label>
+                                    <input asp-for="MemberType" type="text" class="form-control" readonly>
+                                    <span asp-validation-for="MemberType" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        @if (Model.ManagerYn == false)
+                        {
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label asp-for="CorpName"></label>
+                                        <input asp-for="CorpName" type="text" class="form-control" readonly>
+                                        <span asp-validation-for="CorpName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="MemberName"></label>
+                                    <input asp-for="MemberName" type="text" class="form-control" readonly>
+                                    <span asp-validation-for="MemberName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="CreateDate"></label>
+                                    <input asp-for="CreateDate" type="text" class="form-control" readonly>
+                                    <span asp-validation-for="CreateDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="UserEmail"></label>
+                                    <input asp-for="UserEmail" type="text" class="form-control" readonly>
+                                    <span asp-validation-for="UserEmail" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="UserNewEmail"></label>
+
+                                    <input asp-for="UserNewEmail" type="text" class="form-control" required>
+                                    <div class="input-group-append">
+                                        <input type="submit" class="btn btn-info" value="이메일 변경" />
+                                    </div>
+
+
+
+                                    <span class="text-info">이메일 변경시 수신된 이메일을 통해 다시 인증해야 합니다.</span><br />
+                                    <span asp-validation-for="UserNewEmail" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group text-right">
+                                    <button type="button" class="btn btn-default" onclick="history.go(-1);">뒤로가기</button>
+                                    <input type="button" class="btn btn-success" value="인증메일 재발송" onclick="javascript:reAuthEmail(@memberId)" />
+                                    <input type="button" class="btn btn-warning" value="비밀번호 초기화" onclick="javascript:resetPassword(@memberId)" />
+                                    <input type="button" class="btn btn-danger" value="탈퇴" onclick="javascript:deleteMember(@memberId);" />
+                                </div>
+                            </div>
+                        </div>
                     }
                 </div>
             </div>

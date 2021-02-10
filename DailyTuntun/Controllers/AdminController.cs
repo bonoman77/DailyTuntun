@@ -9,8 +9,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using DailyTuntun.DbConns;
 using DailyTuntun.Models;
-
-
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DailyTuntun.Controllers
 {
@@ -69,12 +69,12 @@ namespace DailyTuntun.Controllers
 
             DynamicParameters paramCnt = new DynamicParameters();
             paramCnt.Add("@SearchText", searchText);
-            var listCnt = DapperORM.ExecuteReturn<AdminMemberCntModel>("uspGetDailyAdminMemberCnt", paramCnt);
+            var listCnt = DapperORM.ExecuteReturn<int>("uspGetDailyAdminMemberCnt", paramCnt);
 
             var pageSize = 30;
 
             CommonController Common = new CommonController();
-            Common.PagedList(page, listCnt.TotalCnt, pageSize);
+            Common.PagedList(page, listCnt, pageSize);
 
             ViewData["Page"] = page;
             ViewData["EndPageNum"] = Common.EndPageNum;
@@ -92,34 +92,6 @@ namespace DailyTuntun.Controllers
             param.Add("@SearchText", searchText);
             return View(DapperORM.ReturnList<AdminMemberModel>("uspGetDailyAdminMemberList", param));
         }
-
-        [HttpGet]
-        public IActionResult MemberCounselList()
-        {
-            int memberId = 0;
-
-            if (User.Identity.IsAuthenticated)
-                memberId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-            if (memberId == 0)
-            {
-                return RedirectToAction("LogIn", "Account", new { managerYn = true });
-            }
-
-            DynamicParameters paramManager = new DynamicParameters();
-            paramManager.Add("@MemberID", memberId);
-            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberAdminYn", paramManager);
-
-            if (adminYn != true)
-            {
-                return RedirectToAction("AdminAuthError", "Admin");
-            }
-
-            DynamicParameters param = new DynamicParameters();
-            param.Add("@MemberID", memberId);
-            return View(DapperORM.ReturnList<AdminMemberCounselModel>("uspGetDailyAdminMemberCounselOneList", param));
-        }
-
 
         [HttpGet]
         public IActionResult MemberUpdate(int memberId)
@@ -199,12 +171,12 @@ namespace DailyTuntun.Controllers
 
             DynamicParameters paramCnt = new DynamicParameters();
             paramCnt.Add("@SearchText", searchText);
-            var listCnt = DapperORM.ExecuteReturn<AdminMemberCntModel>("uspGetDailyAdminMemberCounselCnt", paramCnt);
+            var listCnt = DapperORM.ExecuteReturn<int>("uspGetDailyAdminConsultCnt", paramCnt);
 
             var pageSize = 30;
 
             CommonController Common = new CommonController();
-            Common.PagedList(page, listCnt.TotalCnt, pageSize);
+            Common.PagedList(page, listCnt, pageSize);
 
             ViewData["Page"] = page;
             ViewData["EndPageNum"] = Common.EndPageNum;
@@ -220,35 +192,148 @@ namespace DailyTuntun.Controllers
             param.Add("@PageSize", Common.PageSize);
             param.Add("@pageNumber", page);
             param.Add("@SearchText", searchText);
-            return View(DapperORM.ReturnList<AdminMemberModel>("uspGetDailyAdminMemberCounselList", param));
+            return View(DapperORM.ReturnList<AdminMemberModel>("uspGetDailyAdminConsultList", param));
+        }
+
+
+        [HttpGet]
+        public IActionResult MemberCounselList(int memberId)
+        {
+            int memId = 0;
+
+            if (User.Identity.IsAuthenticated)
+                memId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (memId == 0)
+            {
+                return RedirectToAction("LogIn", "Account", new { managerYn = true });
+            }
+
+            DynamicParameters paramManager = new DynamicParameters();
+            paramManager.Add("@MemberID", memId);
+            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberAdminYn", paramManager);
+
+            if (adminYn != true)
+            {
+                return RedirectToAction("AdminAuthError", "Admin");
+            }
+
+            ViewData["MemberID"] = memberId;
+
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@MemberID", memberId);
+            return View(DapperORM.ReturnList<AdminCounselModel>("uspGetDailyAdminMemberConsultList", param));
+        }
+
+
+        [HttpGet]
+        public IActionResult CounselRegister(int memberId)
+        {
+            CommonController Common = new CommonController();
+
+            List<CommonCateModel> counselKindList = Common.CommonList("CounselKindID");
+            ViewBag.counselKindList = new SelectList(counselKindList, "CommonCateID", "CommonCateName");
+
+            ViewData["memberId"] = memberId;
+
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@MemberID", memberId);
+                return View(DapperORM.ExecuteReturn<AdminCounselDetailModel>("uspGetDailyMemberDetail", param));
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home", new { exception = ex });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CounselRegister(AdminCounselDetailModel model)
+        {
+            DynamicParameters param = new DynamicParameters();
+
+            if (ModelState.IsValid)
+            {
+                param.Add("@MemberID", model.MemberID);
+                param.Add("@Title", model.Title);
+                param.Add("@Contents", model.Contents);
+                param.Add("@Mobile", model.Mobile);
+                param.Add("@CounselKindID", model.CounselKindID);
+                param.Add("@ContactDate", model.ContactDate);
+                param.Add("@CompleteDate", model.CompleteDate);
+                
+                DapperORM.ExecuteWithoutReturn("uspSetDailyAdminConsultInsert", param);
+
+                return RedirectToAction("MemberList", "Admin");
+            }
+
+            CommonController Common = new CommonController();
+
+            List<CommonCateModel> counselKindList = Common.CommonList("CounselKindID");
+            ViewBag.counselKindList = new SelectList(counselKindList, "CommonCateID", "CommonCateName");
+
+            return View(model);
         }
 
         [HttpGet]
-        public IActionResult CounselRegist()
+        public IActionResult CounselUpdate(int counselId)
         {
-            //uspSetStreamAdminMemberCounselInsert
-            return View();
+            CommonController Common = new CommonController();
+
+            List<CommonCateModel> counselKindList = Common.CommonList("CounselKindID");
+            ViewBag.counselKindList = new SelectList(counselKindList, "CommonCateID", "CommonCateName");
+
+            ViewData["counselId"] = counselId;
+
+            try
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@CounselID", counselId);
+                return View(DapperORM.ExecuteReturn<AdminCounselDetailModel>("uspGetDailyAdminConsultDetail", param));
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home", new { exception = ex });
+            }
         }
 
-        [HttpGet]
-        public IActionResult CounselUpdate()
+        [HttpPost]
+        public IActionResult CounselUpdate(AdminCounselDetailModel model)
         {
-            //uspSetStreamAdminMemberCounselUpdate
-            return View();
+            DynamicParameters param = new DynamicParameters();
+
+            if (ModelState.IsValid)
+            {
+                param.Add("@CounselID", model.CounselID);
+                param.Add("@Title", model.Title);
+                param.Add("@Contents", model.Contents);
+                param.Add("@Mobile", model.Mobile);
+                param.Add("@CounselKindID", model.CounselKindID);
+                param.Add("@ContactDate", model.ContactDate);
+                param.Add("@CompleteDate", model.CompleteDate);
+
+                DapperORM.ExecuteWithoutReturn("uspSetDailyAdminConsultUpdate", param);
+
+                return RedirectToAction("MemberList", "Admin");
+            }
+
+            CommonController Common = new CommonController();
+
+            List<CommonCateModel> counselKindList = Common.CommonList("CounselKindID");
+            ViewBag.counselKindList = new SelectList(counselKindList, "CommonCateID", "CommonCateName");
+
+            return View(model);
         }
 
-        [HttpGet]
-        public IActionResult CounselDelete()
+        [HttpPost]
+        public JsonResult CounselDelete(int counselId)
         {
-            //uspSetStreamAdminMemberCounselDelete
-            return View();
-        }
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@CounselID", counselId);
+            DapperORM.ExecuteWithoutReturn("uspSetDailyAdminConsultDelete", param);
 
-        [HttpGet]
-        public IActionResult CounselComplete()
-        {
-            //uspSetStreamAdminMemberCounselComplete            
-            return View();
+            return Json(new { success = true });
         }
 
         [HttpGet]
@@ -256,7 +341,6 @@ namespace DailyTuntun.Controllers
         {
             return View();
         }
-
 
         [HttpPost]
         public JsonResult ReAuthEmail(int memberId)
@@ -318,7 +402,7 @@ namespace DailyTuntun.Controllers
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@MemberID", memberId);
                 param.Add("@AuthCode", authCode);
-                var join = DapperORM.ExecuteReturn<int>("uspSetDailyAdmimMemberPassReset", param);
+                var join = DapperORM.ExecuteReturn<int>("uspSetDailyAdminMemberPassReset", param);
 
                 if (join == 0)
                 {

@@ -25,6 +25,7 @@ namespace DailyTuntun.Models
         public int ContentTitleID { get; set; }
         public string ContentTitle { get; set; }
         public string ContentImageURL { get; set; }
+        public int ContentGroupID { get; set; }
         public string ContentGroupImageURL { get; set; }
         public bool AuthYn { get; set; }
         public bool UseYn { get; set; }

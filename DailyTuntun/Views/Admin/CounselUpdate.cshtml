@@ -1,0 +1,140 @@
+﻿@model DailyTuntun.Models.AdminCounselDetailModel
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "상담수정";
+}
+
+<div class="content">
+    <div class="row">
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">@ViewData["Title"]</h5>
+                </div>
+                <div class="card-body">
+
+                    @using (Html.BeginForm("CounselUpdate", "Admin", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(model => model.CounselID)
+
+                        @if (Model.ManagerYn == true)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="MemberCode"></label>
+                                        <input asp-for="MemberCode" type="text" class="form-control" readonly>
+                                        <span asp-validation-for="MemberCode" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="MemberName"></label>
+                                        <input asp-for="MemberName" type="text" class="form-control" readonly>
+                                        <span asp-validation-for="MemberName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="MemberCode"></label>
+                                        <input asp-for="MemberCode" type="text" class="form-control" readonly>
+                                        <span asp-validation-for="MemberCode" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="CorpName"></label>
+                                        <input asp-for="CorpName" type="text" class="form-control" readonly>
+                                        <span asp-validation-for="CorpName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="MemberName"></label>
+                                        <input asp-for="MemberName" type="text" class="form-control" readonly>
+                                        <span asp-validation-for="MemberName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="ContactDate"></label>
+                                    <input asp-for="ContactDate" type="text" asp-format="{0:dd/MM/yyyy HH:MM}" class="form-control datepicker" required>
+                                    <span asp-validation-for="ContactDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="CompleteDate"></label>
+                                    <input asp-for="CompleteDate" type="text" asp-format="{0:dd/MM/yyyy HH:MM}" class="form-control datepicker">
+                                    <span asp-validation-for="CompleteDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="CounselKind"></label>
+                                    <div class="form-group">
+                                        @if (ViewBag.counselKindList != null)
+                                        {
+                                            @Html.DropDownListFor(model => Model.CounselKindID, ViewBag.counselKindList as SelectList, new { @class = "form-control", @style = "height:40px" })
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Mobile"></label>
+                                    <input asp-for="Mobile" type="text" class="form-control">
+                                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="Title">제목 (미입력시 내용의 첫 줄을 제목으로 등록)</label>
+                                    <input asp-for="Title" type="text" class="form-control" placeholder="제목을 입력하세요.">
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="Contents"></label>
+                                    <textarea asp-for="Contents" class="form-control" rows="5" placeholder="내용을 입력하세요." required></textarea>
+                                    <span asp-validation-for="Contents" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group text-right">
+                                    <button type="button" class="btn btn-default" onclick="history.go(-1);">뒤로가기</button>
+                                    <input type="submit" value="수정하기" class="btn btn-info" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

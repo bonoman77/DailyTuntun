@@ -9030,13 +9030,27 @@ h1.title.text-dark {
 }
 
     .page-header.page-header-small {
-        min-height: 65vh !important;
+        min-height: 45vh;
         max-height: 700px;
     }
-
-    .page-header.page-header-xs {
-        min-height: 40vh !important;
+@media all and (max-width:479px) {
+    .page-header.page-header-small {
+        min-height: 60vh;
     }
+    .page-header.page-header-small .description img {
+        max-height: 80px;
+        /*margin-top: 40px;*/
+    }
+    .page-header .description {
+        font-size: 1em !important;
+    }
+    .page-header .motto .text-sub-title {
+        font-size: 1.5em !important;
+    }
+}
+.page-header.page-header-xs {
+    min-height: 40vh !important;
+}
 
     .page-header .page-header-image {
         position: absolute;
@@ -9059,13 +9073,23 @@ h1.title.text-dark {
         color: #FFFFFF;
         width: 100%;
     }
+        .page-header .content-center.sub-center {
+            top: 55%;
+        }
 
     .page-header .motto {
         color: #FFFFFF;
         text-align: center;
         z-index: 2;
         position: relative;
+        font-family: "NanumSquareRound", "Montserrat", "Helvetica", Arial, sans-serif;
+        word-break: keep-all;
     }
+            .page-header .motto .text-sub-title {
+                font-size: 2em;
+                color: #ffffff;
+                font-weight: 800;
+            }
 
     .page-header .filter::after {
         background-color: rgba(0, 0, 0, 0.5);
@@ -9107,7 +9131,19 @@ h1.title.text-dark {
 
     .page-header .description {
         color: #FFFFFF;
+        font-size: 1.2em;
     }
+
+    .contentlist {
+        text-align:left;
+
+    }
+        .contentlist .description {
+            font-size: 2em;
+            color: #343a40;
+            font-weight: 800;
+        }
+
 
 .header-video.state-play .filter::after {
     opacity: 0;
@@ -9346,6 +9382,10 @@ video {
     .card.card:not(.card-plain) .card-image .img {
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
+    }
+
+    .card.card-blog .card-image#image_7{
+
     }
 
     .card.card-blog {
@@ -15958,4 +15998,84 @@ License - nucleoapp.com/license/
 
 .copyrightImg img {
     width: 70%;
+}
+
+
+
+/*최경아 추가*/
+.card-block {
+    padding: 109px 0 0 0;
+    width: 1140px;
+}
+.card-block .card-day {
+    padding: 0 15px;
+}
+    .card-block .card-day:nth-child(3)::before, .card-block .card-day:nth-child(11)::before, .card-block .card-day:nth-child(17)::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 70px;
+        width: 1000px;
+        height: 10px;
+        background: #ffffff;
+    }
+    .card-block .card-day:nth-child(7)::before, .card-block .card-day:nth-child(14)::before {
+        content: '';
+        display: block;
+        position: absolute;
+        margin: 0 75px;
+        width: 10px;
+        height: 300px;
+        background: #ffffff;
+    }
+    .card-block .card-day:nth-child(3)::before {
+        top: 250px;
+    }
+    .card-block .card-day:nth-child(11)::before {
+        top: 630px;
+    }
+    .card-block .card-day:nth-child(17)::before {
+        top: 1010px;
+    }
+    .card-block .card-day:nth-child(7)::before {
+        top: 300px;
+    }
+    .card-block .card-day:nth-child(14)::before {
+        top: 680px;
+    }
+    .card-block .card-day:nth-child(7) {
+        margin-left: 950px;
+    }
+    .card-block .card-day:nth-child(8) {
+        margin-left: 950px;
+    }
+    .card-block .card-day:nth-child(9) {
+        margin: -190px 0 0 760px;
+    }
+    .card-block .card-day:nth-child(10) {
+        margin: -190px 0 0 570px;
+    }
+    .card-block .card-day:nth-child(11) {
+        margin: -190px 0 0 -380px;
+    }
+    .card-block .card-day:nth-child(12) {
+        margin: -190px 0 0 -380px;
+    }
+    .card-block .card-day:nth-child(13) {
+        margin: -190px 0 0 -380px;
+    }
+    .card-block .card-day:nth-child(14) {
+        margin: 0 950px 0 -190px;
+    }
+
+@media all and (max-width:767px) {
+    .block-header.sub-center {
+        top: 50%;
+    }
+    .block-header .contentlist {
+        text-align: center;
+    }
+    .block-header img{
+        max-width: 100%;
+    }
 }

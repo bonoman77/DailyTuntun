@@ -170,6 +170,79 @@ namespace DailyTuntun.Controllers
             return View(DapperORM.ReturnList<ProductContentModel>(procList, param));
         }
 
+
+        [HttpGet]
+        public IActionResult ContentMapList(int productKindId, int contentTitleId)
+        {
+            int memberId = 0;
+
+            if (User.Identity.IsAuthenticated)
+                memberId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (memberId == 0)
+            {
+                return RedirectToAction("LogIn", "Account");
+            }
+
+            DynamicParameters paramOption = new DynamicParameters();
+            paramOption.Add("@MemberID", memberId);
+            bool responsiveYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberResponsiveYn", paramOption);
+
+            if (responsiveYn == true)
+            {
+                return RedirectToAction("ContentList", "Product", new { productKindId = productKindId, contentTitleId = contentTitleId });
+            }
+
+            string proc;
+            string procList;
+
+            DynamicParameters paramManager = new DynamicParameters();
+            paramManager.Add("@MemberID", memberId);
+            var managerYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberManagerYn", paramManager);
+
+            if (Enum.IsDefined(typeof(ProductKindId), productKindId))
+            {
+
+                if (managerYn == true)
+                {
+                    proc = "uspGetDailyContentTitleDetailManager";
+                    procList = "uspGetDailyContentListManager";
+                }
+                else
+                {
+                    proc = "uspGetDailyContentTitleDetail";
+                    procList = "uspGetDailyContentList";
+                }
+            }
+            else
+            {
+                return RedirectToAction("ContentAuthError", "Product");
+            }
+
+            DynamicParameters paramTitle = new DynamicParameters();
+            paramTitle.Add("@MemberID", memberId);
+            paramTitle.Add("@ContentTitleID", contentTitleId);
+            ProductTitleModel model = DapperORM.ExecuteReturn<ProductTitleModel>(proc, paramTitle);
+
+            if (model == null || model.AuthYn == false)
+            {
+                return RedirectToAction("ContentAuthError", "Product");
+            }
+
+            ViewData["ProductKindID"] = productKindId;
+            ViewData["ContentTitleID"] = contentTitleId;
+            ViewData["ContentTitle"] = model.ContentTitle;
+            ViewData["ContentImageURL"] = model.ContentImageURL;
+            ViewData["ContentGroupID"] = model.ContentGroupID;
+            ViewData["ContentGroupImageURL"] = model.ContentGroupImageURL;
+
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@MemberID", memberId);
+            param.Add("@ContentTitleID", contentTitleId);
+            return View(DapperORM.ReturnList<ProductContentModel>(procList, param));
+        }
+
+
         [HttpPost]
         public JsonResult ContentViewCheck(int contentId)
         {

@@ -45,57 +45,78 @@
                                     <th class="text-center" width="15%">@Html.DisplayNameFor(model => model.MemberName)</th>
                                     <th class="text-center" width="30%">@Html.DisplayNameFor(model => model.UserEmail)</th>
                                     <th class="text-center" width="7%">@Html.DisplayNameFor(model => model.MemberType)</th>
-                                    <th class="text-center" width="5%">@Html.DisplayNameFor(model => model.AuthYn)</th>
-                                    <th class="text-center" width="10%">@Html.DisplayNameFor(model => model.CreateDate)</th>
-                                    <th class="text-center" width="10%">옵션</th>
+                                    <th class="text-center" width="10%">상담이력</th>
+                                    <th class="text-center" width="8%">상담등록</th>
+                                    <th class="text-center" width="5%">로그인</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if (Model.Count() == 0)
                                 {
-                                <tr>
-                                    <td class="text-center" colspan="7">
-                                        자료가 없습니다.
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td class="text-center" colspan="8">
+                                            자료가 없습니다.
+                                        </td>
+                                    </tr>
                                 }
                                 else
                                 {
-                                @foreach (var item in Model)
+                                    @foreach (var item in Model)
                                     {
-                            <tr>
-                                <td class="text-center" width="8%">
-                                    @Html.DisplayFor(modelItem => item.MemberID)
-                                </td>
-                                <td class="text-center" width="10%">
-                                    @Html.DisplayFor(modelItem => item.MemberCode)
-                                </td>
-                                <td class="text-center" width="15%">
-                                    <a href="@Url.Action("MemberUpdate", "Admin", new { memberId = item.MemberID })">
-                                        @Html.DisplayFor(modelItem => item.MemberName)
-                                    </a>
-                                </td>
-                                <td class="text-center" width="30%">
-                                    @Html.DisplayFor(modelItem => item.UserEmail)
-                                </td>
-                                <td class="text-center" width="7%">
-                                    @Html.DisplayFor(modelItem => item.MemberType)
-                                </td>
-                                <td class="text-center" width="5%">
-                                    @Html.DisplayFor(modelItem => item.AuthYn)
-                                </td>
-                                <td class="text-center" width="10%">
-                                    @Html.DisplayFor(modelItem => item.CreateDate)
-                                </td>
-                                <td class="text-center" width="10%">
-                                    <button type="button" onclick="location.href='@Url.Action("MemberUpdate", "Admin", new { memberId = item.MemberID })';" class="btn btn-success btn-icon btn-sm">
-                                        <i class="nc-icon nc-box"></i>
-                                    </button>
-                                    <button type="button" onclick="location.href='@Url.Action("MemberLogIn", "Admin", new { memberId = item.MemberID })';" class="btn btn-danger btn-icon btn-sm">
-                                        <i class="nc-icon nc-button-play"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                                        <tr>
+                                            <td class="text-center" width="8%">
+                                                @Html.DisplayFor(modelItem => item.MemberID)
+                                            </td>
+                                            <td class="text-center" width="10%">
+                                                @Html.DisplayFor(modelItem => item.MemberCode)
+                                            </td>
+                                            <td class="text-center" width="15%">
+                                                @if (item.AuthYn == true)
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.MemberName)
+                                                }
+                                                else
+                                                {
+                                                    <div class="text-warning">
+                                                        @Html.DisplayFor(modelItem => item.MemberName)
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td class="text-center" width="30%">
+                                                <a href="mailto:@Html.DisplayFor(modelItem => item.UserEmail)">
+                                                    @Html.DisplayFor(modelItem => item.UserEmail)
+                                                </a>
+                                            </td>
+                                            <td class="text-center" width="7%">
+                                                @Html.DisplayFor(modelItem => item.MemberType)
+                                            </td>
+                                            <td class="text-center" width="10%">
+                                                @if (item.CounselCnt > 0)
+                                                {
+                                                    <a href="@Url.Action("MemberCounselList", "Admin", new { memberId = item.MemberID })">
+                                                        @Html.DisplayFor(modelItem => item.CompleteCnt) /
+                                                        @Html.DisplayFor(modelItem => item.CounselCnt)
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.CounselCnt)
+                                                }
+                                            </td>
+                                            <td class="text-center" width="8%">
+                                                <a href="@Url.Action("CounselRegister", "Admin", new { memberId = item.MemberID })" class="btn btn-success btn-link btn-icon edit">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </td>
+                                            <td class="text-center" width="8%">
+                                                <button type="button" onclick="location.href='@Url.Action("MemberUpdate", "Admin", new { memberId = item.MemberID })';" class="btn btn-info btn-icon btn-sm">
+                                                    <i class="nc-icon nc-settings-gear-65"></i>
+                                                </button>
+                                                <button type="button" onclick="location.href='@Url.Action("MemberLogIn", "Admin", new { memberId = item.MemberID })';" class="btn btn-danger btn-icon btn-sm">
+                                                    <i class="nc-icon nc-button-play"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
                                     }
                                 }
                             </tbody>
@@ -125,30 +146,30 @@
                         <ul class="pagination">
                             @if ((bool)ViewData["PrePageYn"] == true)
                             {
-                            <li class="page-item">
-                                <a class="page-link" href="@Url.Action(actionName, controllerName,  new {page=ViewData["PrePageButtonNum"], sDate=ViewData["StartDate"], eDate=ViewData["EndDate"], sText=ViewData["SearchText"]})">
-                                    <span aria-hidden="true"><i class="fa fa-angle-double-left" aria-hidden="true"></i></span>
-                                </a>
-                            </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action(actionName, controllerName,  new {page=ViewData["PrePageButtonNum"], sDate=ViewData["StartDate"], eDate=ViewData["EndDate"], sText=ViewData["SearchText"]})">
+                                        <span aria-hidden="true"><i class="fa fa-angle-double-left" aria-hidden="true"></i></span>
+                                    </a>
+                                </li>
                             }
                             @for (int i = (int)ViewData["NowPageStartNum"]; i < @maxPage; i++)
                             {
-                            @if ((int)ViewData["Page"] == i)
+                                @if ((int)ViewData["Page"] == i)
                                 {
-                            <li class="page-item active"><a class="page-link" href="@Url.Action(actionName, controllerName, new {page=@i, sDate=ViewData["StartDate"], eDate=ViewData["EndDate"], sText=ViewData["SearchText"]})">@i</a></li>
+                                    <li class="page-item active"><a class="page-link" href="@Url.Action(actionName, controllerName, new {page=@i, sDate=ViewData["StartDate"], eDate=ViewData["EndDate"], sText=ViewData["SearchText"]})">@i</a></li>
                                 }
                                 else
                                 {
-                            <li class="page-item"><a class="page-link" href="@Url.Action(actionName, controllerName, new {page=@i, sDate=ViewData["StartDate"], eDate=ViewData["EndDate"], sText=ViewData["SearchText"]})">@i</a></li>
+                                    <li class="page-item"><a class="page-link" href="@Url.Action(actionName, controllerName, new {page=@i, sDate=ViewData["StartDate"], eDate=ViewData["EndDate"], sText=ViewData["SearchText"]})">@i</a></li>
                                 }
                             }
                             @if ((bool)ViewData["NextPageYn"] == true)
                             {
-                            <li class="page-item">
-                                <a class="page-link" href="@Url.Action(actionName, controllerName, new {page=ViewData["nextPageButtonNum"], sDate=ViewData["StartDate"], eDate=ViewData["EndDate"], sText=ViewData["SearchText"]})">
-                                    <span aria-hidden="true"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>
-                                </a>
-                            </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action(actionName, controllerName, new {page=ViewData["nextPageButtonNum"], sDate=ViewData["StartDate"], eDate=ViewData["EndDate"], sText=ViewData["SearchText"]})">
+                                        <span aria-hidden="true"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>
+                                    </a>
+                                </li>
                             }
                         </ul>
                     </div>

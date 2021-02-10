@@ -8,6 +8,7 @@ D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\ass
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\css\paper-dashboard.min.css
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\css\paper-kit-backup.css
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\css\paper-kit.css
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\css\paper-kit.css.bak
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\css\paper-kit.css.map
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\css\paper-kit.min.css
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\demo\demo.css
@@ -215,6 +216,10 @@ D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\ass
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\sub\bg_gray.png
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\sub\bg_sub.png
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\sub\block_bg.jpg
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\sub\block_bg_4.jpg
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\sub\block_bg_5.jpg
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\sub\block_bg_6.jpg
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\sub\block_bg_7.jpg
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\sub\icon_4.png
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\sub\icon_5.png
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\sub\icon_6.png

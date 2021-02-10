@@ -692,27 +692,6 @@ $(document).ready(function () {
     }); 
 });
 
-
-
-// Trumbowyg Textarea 
-$(".trumbo").trumbowyg({
-    btns: [
-        ['viewHTML'],
-        ['undo', 'redo'], // Only supported in Blink browsers
-        ['formatting'],
-        ['strong', 'em', 'del'],
-        ['superscript', 'subscript'],
-        ['link'],
-        ['insertImage'],
-        ['uploadImage'],
-        ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
-        ['unorderedList', 'orderedList'],
-        ['horizontalRule'],
-        ['removeformat'],
-        ['fullscreen']
-    ]
-});
-
 $('textarea').each(function () {
     this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
 }).on('input', function () {

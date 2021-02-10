@@ -1,0 +1,152 @@
+﻿@model IEnumerable<DailyTuntun.Models.AdminCounselModel>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "상담누적자료";
+
+    int memberId = (int)ViewData["MemberID"];
+
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">@ViewData["Title"]</h4>
+                </div>
+                <div class="card-body">
+                    <div class="toolbar">
+                        <!--        Here you can write extra buttons/actions for the toolbar              -->
+                    </div>
+                    <table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                        <thead class="text-primary">
+                            <tr>
+                                <th class="text-center" width="5%">
+                                    #
+                                </th>
+                                <th class="text-center" width="10%">
+                                    @Html.DisplayNameFor(model => model.MemberCode)
+                                </th>
+                                <th class="text-center" width="10%">
+                                    @Html.DisplayNameFor(model => model.MemberName)
+                                </th>
+                                <th class="text-center" width="15%">
+                                    @Html.DisplayNameFor(model => model.CounselKind)
+                                </th>
+                                <th class="text-left" width="40%">
+                                    @Html.DisplayNameFor(model => model.Title)
+                                </th>
+                                <th class="text-center" width="8%">
+                                    @Html.DisplayNameFor(model => model.ContactDate)
+                                </th>
+                                <th class="text-center" width="5%">
+                                    @Html.DisplayNameFor(model => model.CompleteYn)
+                                </th>
+                                <th class="text-center" width="7%">
+                                    옵션
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count() == 0)
+                            {
+                                <tr>
+                                    <td class="text-center" colspan="8">
+                                        <div class="text-danger"><strong>상담내역이 없습니다.</strong></div>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var item in Model)
+                                {
+                        <tr id="row_@item.CounselID">
+                            <td class="text-center" width="5%">
+                                <a href="@Url.Action("CounselUpdate", "Admin", new { manageId = item.CounselID })">
+                                    @Html.DisplayFor(modelItem => item.CounselID)
+                                </a>
+                            </td>
+                            <td class="text-center" width="10%">
+                                @Html.DisplayFor(modelItem => item.MemberCode)
+                            </td>
+                            <td class="text-center" width="10%">
+                                @Html.DisplayFor(modelItem => item.MemberName)
+                            </td>
+                            <td class="text-center" width="15%">
+                                @Html.DisplayFor(modelItem => item.CounselKind)
+                            </td>
+                            <td class="text-left" width="40%">
+                                <a href="@Url.Action("CounselUpdate", "Admin", new { counselId = item.CounselID })">
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </a>
+                            </td>
+                            <td class="text-center" width="8%">
+                                @Html.DisplayFor(modelItem => item.ContactDate)
+                            </td>
+                            <td class="text-center" width="5%">
+                                @Html.DisplayFor(modelItem => item.CompleteYn)
+                            </td>
+
+                            <td class="text-center" width="7%">
+                                <button type="button" onclick="location.href='@Url.Action("CounselUpdate", "Admin", new { counselId = item.CounselID })';" class="btn btn-success btn-icon btn-sm">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button type="button" onclick="itemDelete(@item.CounselID);" class="btn btn-danger btn-icon btn-sm">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group text-left">
+                        <button type="button" class="btn btn-default" onclick="history.go(-1);">뒤로가기</button>
+                        <button class="btn btn-info" type="button" onclick="location.href='@Url.Action("CounselRegister", "Admin", new { memberId = memberId })';">신규등록 <i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var itemDelete = function (CounselID) {
+        swal({
+            title: '삭제',
+            text: "선택한 등록글을 정말로 삭제하시겠습니까?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            confirmButtonText: 'Yes, delete it!',
+            buttonsStyling: false
+        }).then(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/CounselDelete",
+                data: { counselId: CounselID },
+                success: function (result) {
+                    swal({
+                        title: '삭제완료!',
+                        text: '정상적으로 삭제하였습니다.',
+                        type: 'success',
+                        confirmButtonClass: "btn btn-success",
+                        buttonsStyling: false
+                    }),
+                        $("#row_" + CounselID).remove();
+                }
+            })
+        }).catch(swal.noop);
+    }
+
+</script>
+
+

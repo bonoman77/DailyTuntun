@@ -6,6 +6,9 @@ using System.Linq;
 using MailKit.Net.Smtp;
 using MimeKit;
 using Microsoft.AspNetCore.Identity;
+using DailyTuntun.DbConns;
+using Dapper;
+using DailyTuntun.Models;
 
 namespace DailyTuntun.Controllers
 {
@@ -68,12 +71,6 @@ namespace DailyTuntun.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult VersionHistoryList()
-        {
-            return View();
-        }
-
         public static bool IsInternetExplorer(string userAgent)
         {
             if (userAgent.Contains("MSIE") || userAgent.Contains("Trident"))
@@ -84,6 +81,16 @@ namespace DailyTuntun.Controllers
             {
                 return false;
             }
+        }
+
+        public List<CommonCateModel> CommonList(string separate)
+        {
+                
+            DynamicParameters paramCate = new DynamicParameters();
+            paramCate.Add("@CateSeparate", separate);
+            List<CommonCateModel> commonList = DapperORM.ReturnList<CommonCateModel>("uspGetDailyCommonCateList", paramCate).ToList();
+
+            return commonList;
         }
 
         [HttpPost]
