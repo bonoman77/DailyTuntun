@@ -1,0 +1,139 @@
+﻿@model IEnumerable<DailyTuntun.Models.AdminStreamContentModel>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "컨텐츠목록";
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">@ViewData["ContentTitle"]</h4>
+                </div>
+                <div class="card-body">
+                    <div class="toolbar">
+                        <!--        Here you can write extra buttons/actions for the toolbar              -->
+                    </div>
+                    <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                        <thead class="text-primary">
+                            <tr>
+                                <th class="text-center" width="10%">@Html.DisplayNameFor(model => model.ContentType)</th>
+                                <th class="text-center" width="10%">@Html.DisplayNameFor(model => model.OrderNum)</th>
+                                <th class="text-center" width="60%">@Html.DisplayNameFor(model => model.StreamURL)</th>
+                                <th class="text-center" width="10%">수정</th>
+                                <th class="text-center" width="10%">재생</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center" width="10%">
+                                        @Html.DisplayFor(modelItem => item.ContentType)
+                                    </td>
+                                    <td class="text-center" width="10%">
+                                        @Html.DisplayFor(modelItem => item.OrderNum)
+                                    </td>
+                                    <td class="text-left" width="60%">
+                                        &nbsp;&nbsp;&nbsp;
+                                        @Html.DisplayFor(modelItem => item.StreamURL)
+                                    </td>
+                                    <td class="text-center" width="10%">
+                                        <button type="button" onclick="streamUpdate(@item.ContentID);" class="btn btn-success btn-icon btn-sm">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center" width="10%">
+                                        <button type="button" onclick="streamPlay(@item.ContentID);" class="btn btn-warning btn-icon btn-sm">
+                                            <i class="fa fa-play"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end content-->
+            </div>
+            <!--  end card  -->
+        </div>
+        <!-- end col-md-12 -->
+    </div>
+    <!-- end row -->
+</div>
+
+
+<!-- play modal -->
+<div class="modal" id="play" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-notice">
+        <div class="modal-content">
+            <div class="modal-body" style="padding-left: 10px; padding-right: 10px;">
+                <div class="instruction">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-body card-plain">
+                                <iframe id="content" frameborder="0" playsinline="false" allow="autoplay; fullscreen" webkitallowfullscreen mozallowfullscreen allowfullscreen style="max-width: none !important"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- stream url update -->
+<div class="modal" id="streamModal" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="false">
+    <div class="modal-dialog modal-register">
+        <div class="modal-content" id="updateStream">
+        </div>
+    </div>
+</div>
+
+<!-- play stream -->
+<div class="modal" id="playModal" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="false">
+    <div class="modal-dialog modal-notice">
+        <div class="modal-content" id="playStream">
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    var streamUpdate = function (ContentID) {
+        $("#updateStream").load("/Admin/StreamUpdatePartial?contentId=" + ContentID,
+            function () {
+                $("#streamModal").modal("show");
+                $("#streamModal").on('shown.bs.modal', function () {
+                    $("#NewStreamURL").focus();
+                });
+            }
+        );
+    }
+
+    var streamPlay = function (ContentID) {
+        $("#playStream").load(
+            "/Admin/StreamPartial?contentId=" + ContentID,
+            function () {
+                $("#playModal").modal("show");
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+

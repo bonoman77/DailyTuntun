@@ -25,7 +25,6 @@ namespace DailyTuntun.Models
         public string MemberName { get; set; }
         public bool ManagerYn { get; set; }
         public bool AuthYn { get; set; }
-        public bool ResponsiveYn { get; set; }
     }
 
     public class MemberRegisterModel
@@ -203,7 +202,7 @@ namespace DailyTuntun.Models
         public bool ManagerYn { get; set; }
     }
 
-    public class MemberSearchCodeModel
+    public class MemberSearchAccountModel
     {
         [Display(Name = "아이디")]
         [Required(ErrorMessage = "아이디를 입력하세요.")]
@@ -212,6 +211,16 @@ namespace DailyTuntun.Models
         [Display(Name = "비밀번호")]
         [Required(ErrorMessage = "비밀번호를 입력하세요.")]
         public string Password { get; set; }
+        public string MemberCode { get; set; }
+        public string MemberName { get; set; }
+        public int ErrorNum { get; set; }
+    }
+
+    public class MemberSearchCodeModel
+    {
+        [Display(Name = "원코드")]
+        [Required(ErrorMessage = "원코드를 입력하세요.")]
+        public string SearchCode { get; set; }
         public string MemberCode { get; set; }
         public string MemberName { get; set; }
         public int ErrorNum { get; set; }

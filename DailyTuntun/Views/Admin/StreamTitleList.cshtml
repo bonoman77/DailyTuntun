@@ -1,0 +1,104 @@
+﻿@model IEnumerable<DailyTuntun.Models.AdminStreamTitleModel>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "컨텐츠목록";}
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">@ViewData["Title"]</h4>
+                </div>
+                <div class="card-body">
+                    <div class="toolbar">
+                        <!--        Here you can write extra buttons/actions for the toolbar              -->
+                    </div>
+                    <table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                        <thead class="text-primary">
+                            <tr>
+                                <th class="text-center" width="10%">@Html.DisplayNameFor(model => model.ContentTitleID)</th>
+                                <th class="text-center" width="10%">@Html.DisplayNameFor(model => model.ContentGroupName)</th>
+                                <th class="text-center" width="10%">@Html.DisplayNameFor(model => model.TitleNum)</th>
+                                <th class="text-center" width="40%">@Html.DisplayNameFor(model => model.ContentTitle)</th>
+                                <th class="text-center" width="10%">@Html.DisplayNameFor(model => model.TotalContentCnt)</th>
+                                <th class="text-center" width="10%">@Html.DisplayNameFor(model => model.DisplayYn)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center" width="10%">
+                                        @Html.DisplayFor(modelItem => item.ContentTitleID)
+                                    </td>
+                                    <td class="text-center" width="10%">
+                                        @Html.DisplayFor(modelItem => item.ContentGroupName)
+                                    </td>
+                                    <td class="text-center" width="10%">
+                                        @Html.DisplayFor(modelItem => item.TitleNum)
+                                    </td>
+                                    <td class="text-left" width="40%">
+                                        &nbsp;&nbsp;&nbsp;
+                                        <a href="@Url.Action("StreamContentList", "Admin", new { contentTitleId = item.ContentTitleID })">
+                                            @Html.DisplayFor(modelItem => item.ContentTitle)
+                                        </a>
+                                    </td>
+                                    <td class="text-center" width="10%">
+                                        @Html.DisplayFor(modelItem => item.TotalContentCnt)
+                                    </td>
+                                    <td class="text-center" width="10%">
+                                        @if (item.DisplayYn == true)
+                                        {
+                                            <button type="button" id="btn_@item.ContentTitleID" onclick="itemDisplay(@item.ContentTitleID, 0);" class="btn btn-info btn-icon btn-sm">
+                                                <i id="icon_@item.ContentTitleID" class="fa fa-play"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" id="btn_@item.ContentTitleID" onclick="itemDisplay(@item.ContentTitleID, 1);" class="btn btn-default btn-icon btn-sm">
+                                                <i id="icon_@item.ContentTitleID" class="fa fa-stop"></i>
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end content-->
+            </div>
+            <!--  end card  -->
+        </div>
+        <!-- end col-md-12 -->
+    </div>
+    <!-- end row -->
+</div>
+
+<script type="text/javascript">
+
+    var itemDisplay = function (ContentTitleID, DisplayYn) {
+        $.ajax({
+            type: "POST",
+            url: "/Admin/StreamTitleDisplayUpdate",
+            data: { contentTitleId: ContentTitleID, displayYn: DisplayYn },
+            success: function (result) {
+                //location.reload();
+
+                if (result.disYn === 1) {
+                    document.getElementById("btn_" + ContentTitleID).className = 'btn btn-info btn-icon btn-sm';
+                    document.getElementById("btn_" + ContentTitleID).setAttribute('onclick', 'itemDisplay(' + ContentTitleID + ', 0)')
+                    document.getElementById("icon_" + ContentTitleID).className = 'fa fa-play';
+                } else {
+                    document.getElementById("btn_" + ContentTitleID).className = 'btn btn-default btn-icon btn-sm';
+                    document.getElementById("btn_" + ContentTitleID).setAttribute('onclick', 'itemDisplay(' + ContentTitleID + ', 1)')
+                    document.getElementById("icon_" + ContentTitleID).className = 'fa fa-stop';
+                }
+            }
+        });
+    }
+
+</script>
+
+

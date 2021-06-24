@@ -8,6 +8,7 @@ using DailyTuntun.Models;
 
 namespace DailyTuntun.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         public enum ProductKindId
@@ -29,6 +30,7 @@ namespace DailyTuntun.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult MainList(int productKindId)
         {
             ViewData["ProductKindID"] = productKindId;
@@ -46,6 +48,7 @@ namespace DailyTuntun.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult TitleList(int productKindId, int contentGroupId)
         {
             int memberId = 0;
@@ -117,11 +120,6 @@ namespace DailyTuntun.Controllers
             if (User.Identity.IsAuthenticated)
                 memberId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            if (memberId == 0)
-            {
-                return RedirectToAction("LogIn", "Account");
-            }
-
             string proc;
             string procList;
 
@@ -179,11 +177,6 @@ namespace DailyTuntun.Controllers
             if (User.Identity.IsAuthenticated)
                 memberId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            if (memberId == 0)
-            {
-                return RedirectToAction("LogIn", "Account");
-            }
-
             DynamicParameters paramOption = new DynamicParameters();
             paramOption.Add("@MemberID", memberId);
             bool responsiveYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberResponsiveYn", paramOption);
@@ -194,6 +187,7 @@ namespace DailyTuntun.Controllers
             }
 
             string proc;
+            string procPop;
             string procList;
 
             DynamicParameters paramManager = new DynamicParameters();
@@ -206,11 +200,13 @@ namespace DailyTuntun.Controllers
                 if (managerYn == true)
                 {
                     proc = "uspGetDailyContentTitleDetailManager";
+                    procPop = "uspGetDailyContentPopListManager";
                     procList = "uspGetDailyContentListManager";
                 }
                 else
                 {
                     proc = "uspGetDailyContentTitleDetail";
+                    procPop = "uspGetDailyContentPopList";
                     procList = "uspGetDailyContentList";
                 }
             }
@@ -218,6 +214,7 @@ namespace DailyTuntun.Controllers
             {
                 return RedirectToAction("ContentAuthError", "Product");
             }
+
 
             DynamicParameters paramTitle = new DynamicParameters();
             paramTitle.Add("@MemberID", memberId);
@@ -235,6 +232,11 @@ namespace DailyTuntun.Controllers
             ViewData["ContentImageURL"] = model.ContentImageURL;
             ViewData["ContentGroupID"] = model.ContentGroupID;
             ViewData["ContentGroupImageURL"] = model.ContentGroupImageURL;
+
+            DynamicParameters paramPop = new DynamicParameters();
+            paramPop.Add("@MemberID", memberId);
+            paramPop.Add("@ContentTitleID", contentTitleId);
+            ViewBag.PopList = DapperORM.ReturnList<ProductContentModel>(procPop, paramPop);
 
             DynamicParameters param = new DynamicParameters();
             param.Add("@MemberID", memberId);
@@ -325,6 +327,7 @@ namespace DailyTuntun.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult ContentAuthError()
         {
             return View();

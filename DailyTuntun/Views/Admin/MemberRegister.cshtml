@@ -1,0 +1,135 @@
+﻿@model DailyTuntun.Models.MemberRegisterModel
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "원 임의등록";
+}
+
+<div class="content">
+    <div class="row">
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">@ViewData["Title"]</h5>
+                </div>
+
+                <div class="card-body">
+
+                    @using (Html.BeginForm("MemberRegister", "Admin", FormMethod.Post, new { name = "registerform", id = "registerform" }))
+                    {
+
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8">
+                                <div class="form-group">
+                                    <h6>
+                                        <label asp-for="MemberCode" class="control-label"></label>
+                                        <span class="text-danger">*</span>
+                                    </h6>
+                                    <div class="input-group">
+                                        <input asp-for="MemberCode" type="text" class="form-control border-input" readonly>
+                                    </div>
+                                    <button type="button" class="btn" onclick="javascript:memberSearch();" style="border-bottom-width: 0px;" data-toggle="modal" data-target="#loginModal">
+                                        <i class="nc-icon nc-zoom-split"></i> 원코드 찾기
+                                    </button>
+
+                                    <span asp-validation-for="MemberCode" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <h6>
+                                        <label asp-for="CorpName" class="control-label"></label>
+                                        <span class="text-danger">*</span>
+                                    </h6>
+                                    <input asp-for="CorpName" type="text" class="form-control border-input" readonly>
+                                    <span asp-validation-for="CorpName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <h6>
+                                        <label asp-for="MemberName" class="control-label"></label>
+                                        <span class="text-danger">*</span>
+                                    </h6>
+                                    <input asp-for="MemberName" type="text" class="form-control border-input">
+                                    <span asp-validation-for="MemberName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <h6>
+                                        <label asp-for="UserEmail" class="control-label"></label>
+                                        <span class="text-danger">*</span>
+                                    </h6>
+                                    <input asp-for="UserEmail" type="text" class="form-control border-input">
+                                    <span asp-validation-for="UserEmail" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <h6>
+                                        <label asp-for="UserPassword" class="control-label"></label>
+                                        <span class="text-danger">*</span>
+                                    </h6>
+                                    <input asp-for="UserPassword" type="password" class="form-control border-input">
+                                    <span asp-validation-for="UserPassword" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <h6>
+                                        <label asp-for="ConfirmPassword" class="control-label"></label>
+                                        <span class="text-danger">*</span>
+                                    </h6>
+                                    <input asp-for="ConfirmPassword" type="password" class="form-control border-input">
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row buttons-row">
+                            <div class="col-md-4 col-sm-4">
+                                <input type="button" value="취소" onclick="javascript:history.go(-1);" class="btn btn-outline-danger btn-block btn-round">
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="button" id="onsubmit" onclick="javascript:registMember()" value="회원가입" class="btn btn-primary btn-block btn-round" OnClientClick="if(this.value === 'Saving...') { return false; } else { this.value = 'Saving...'; }">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- searchMember modal -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="false">
+    <div class="modal-dialog modal-register">
+        <div class="modal-content" id="searchMemberModal">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var memberSearch = function () {
+        $("#searchMemberModal").load("/Account/SearchMemberCodePartial",
+            function () {
+                $("#myModal").modal("show");
+                $("#myModal").on('shown.bs.modal', function () {
+                    $("#SearchCode").focus();
+                });
+            }
+        );
+    }
+
+    var registMember = function () {
+        swal({
+            title: '원 임의등록 주의사항',
+            text: "실제 회원이 약관에 직접 동의하지 않았기에 법적 효력에 문제가 생길 수 있으며, 인증절차를 거치지 않은 이메일이므로 다양한 고지 의무의 통로가 되는 유일한 정보가 잘못 수집될 수 있습니다. 또한 비밀번호 유출의 위험성도 있습니다. 이를 인지하고 있습니까?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-primary',
+            cancelButtonClass: 'btn btn-danger',
+            confirmButtonText: '네 (가입진행)',
+            cancelButtonText: '취소',
+            buttonsStyling: false
+        }).then(function () {
+            document.registerform.submit();
+        }).catch(swal.noop);
+    }
+</script>
+
+
+

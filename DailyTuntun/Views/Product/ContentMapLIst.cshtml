@@ -41,19 +41,19 @@
 
         @if (contentGroupId == 1)
         {
-            <img src="/assets/img/sub/block_bg_4.jpg" style="position: relative; left: 50%; margin-left: -960px;" usemap="#block_play4"> <!--연령에따라 배경이미지, map주소 바뀌어야 함-->
+            <img src="/assets/img/sub/block_bg_4.jpg" style="position: relative; left: 50%; margin-left: -960px;" usemap="#block_play"> <!--연령에따라 배경이미지, map주소 바뀌어야 함-->
         }
         else if (contentGroupId == 2)
         {
-            <img src="/assets/img/sub/block_bg_5.jpg" style="position: relative; left: 50%; margin-left: -960px;" usemap="#block_play5"> <!--연령에따라 배경이미지, map주소 바뀌어야 함-->
+            <img src="/assets/img/sub/block_bg_5.jpg" style="position: relative; left: 50%; margin-left: -960px;" usemap="#block_play"> <!--연령에따라 배경이미지, map주소 바뀌어야 함-->
         }
         else if (contentGroupId == 3)
         {
-            <img src="/assets/img/sub/block_bg_6.jpg" style="position: relative; left: 50%; margin-left: -960px;" usemap="#block_play6"> <!--연령에따라 배경이미지, map주소 바뀌어야 함-->
+            <img src="/assets/img/sub/block_bg_6.jpg" style="position: relative; left: 50%; margin-left: -960px;" usemap="#block_play"> <!--연령에따라 배경이미지, map주소 바뀌어야 함-->
         }
         else if (contentGroupId == 4)
         {
-            <img src="/assets/img/sub/block_bg_7.jpg" style="position: relative; left: 50%; margin-left: -960px;" usemap="#block_play7"> <!--연령에따라 배경이미지, map주소 바뀌어야 함-->
+            <img src="/assets/img/sub/block_bg_7.jpg" style="position: relative; left: 50%; margin-left: -960px;" usemap="#block_play"> <!--연령에따라 배경이미지, map주소 바뀌어야 함-->
         }
 
         <div class="section section-blog" style="position: absolute; left:50%; margin-left: -570px; top: 0;">
@@ -93,14 +93,14 @@
 
                             <!-- all modal -->
                             <div class="modal" id="play_@item.ContentID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-                                <div class="modal-dialog modal-notice">
+                                <div class="modal-dialog modal-lg modal-notice">
                                     <div class="modal-content">
                                         <div class="modal-body" style="padding-left: 10px; padding-right: 10px;">
                                             <div class="instruction">
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="card card-body card-plain">
-                                                            <iframe src="@Html.DisplayFor(modelItem => item.StreamURL)" id="content_@item.ContentID" frameborder="0" playsinline="false" allow="autoplay; fullscreen" webkitallowfullscreen mozallowfullscreen allowfullscreen style="max-width: none !important"></iframe>
+                                                            <iframe src="@Html.DisplayFor(modelItem => item.StreamURL)" id="content_@item.ContentID" frameborder="0" playsinline="false" allow="autoplay; fullscreen" webkitallowfullscreen mozallowfullscreen allowfullscreen style="height: 410px !important; max-width: none !important; max-height: none !important"></iframe>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -114,52 +114,56 @@
                             </div>
 
                             @*<script type="text/javascript">
-                            $("#content_"+@item.ContentID)(function () {
+                                $("#content_"+@item.ContentID)(function () {
 
-                                var ContentID = @item.ContentID;
+                                    var ContentID = @item.ContentID;
 
-                                $.ajax({
-                                    type: "POST",
-                                    url: "/Product/ContentViewCheck",
-                                    data: { contentId: ContentID },
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/Product/ContentViewCheck",
+                                        data: { contentId: ContentID },
+                                    });
+
                                 });
-
-                            });
-                            </script>*@
+                                </script>*@
                         }
                     }
                 </div>
             </div>
         </div>
         <!--연령에 따라 달라지는 이미지맵-->
-        <map name="block_play4" width="100%">
-            <area shape="circle" alt="1" coords="284,692,26" href="javascript:playModal(1);">
-            <area shape="circle" alt="2" coords="1656,527,26" href="javascript:playModal(1);">
-        </map>
-        <map name="block_play5" width="100%">
-            <area shape="circle" alt="1" coords="325,165,26" href="javascript:playModal(1);">
-            <area shape="circle" alt="1" coords="1550,150,26" href="javascript:playModal(1);">
-            <area shape="circle" alt="1" coords="284,692,26" href="javascript:playModal(1);">
-            <area shape="circle" alt="1" coords="1656,527,26" href="javascript:playModal(1);">
-            <area shape="circle" alt="1" coords="1670,1002,26" href="javascript:playModal(1);">
-        </map>
-        <map name="block_play6" width="100%">
-            <area shape="circle" alt="1" coords="325,165,26" href="javascript:playModal(1);">
-            <area shape="circle" alt="1" coords="1550,150,26" href="javascript:playModal(1);">
-            <area shape="circle" alt="1" coords="284,692,26" href="javascript:playModal(1);">
-            <area shape="circle" alt="1" coords="1656,527,26" href="javascript:playModal(1);">
-            <area shape="circle" alt="1" coords="1670,1002,26" href="javascript:playModal(1);">
-        </map>
-        <map name="block_play7" width="100%">
-            <area shape="circle" alt="1" coords="325,165,26" href="javascript:playModal(1);">
-            <area shape="circle" alt="1" coords="1550,150,26" href="javascript:playModal(1);">
-            <area shape="circle" alt="1" coords="284,692,26" href="javascript:playModal(1);">
-            <area shape="circle" alt="1" coords="1656,527,26" href="javascript:playModal(1);">
-            <area shape="circle" alt="1" coords="1670,1002,26" href="javascript:playModal(1);">
+        <map name="block_play" width="100%">
+            @foreach (var item in ViewBag.PopList)
+            {
+                <area shape="circle" alt="@item.OrderNum" coords="@item.Coords" href="javascript:popModal(@item.ContentID);">
+            }
         </map>
     </div>
 </div>
 
+@foreach (var item in ViewBag.PopList)
+{
+    <div class="modal" id="pop_@item.ContentID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-notice">
+            <div class="modal-content">
+                <div class="modal-body" style="padding-left: 10px; padding-right: 10px;">
+                    <div class="instruction">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-body card-plain">
+                                    <iframe src="@item.StreamURL" id="content_@item.ContentID" frameborder="0" playsinline="false" allow="autoplay; fullscreen" webkitallowfullscreen mozallowfullscreen allowfullscreen style="max-width: none !important"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-link" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script type="text/javascript">
@@ -181,6 +185,17 @@
 
         $("#play_" + cId).modal("show");
     }
+
+
+    function popModal(ContentID) {
+
+        var cId = ContentID;
+
+        $("#pop_" + cId).modal("show");
+    }
+
+
+
 
     function resetPlay(ContentTitleID) {
 

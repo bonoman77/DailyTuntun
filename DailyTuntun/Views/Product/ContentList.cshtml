@@ -104,16 +104,16 @@
                                 </div>
                             </div>
 
-                            <!-- all modal -->
+                            <!-- play modal -->
                             <div class="modal" id="play_@item.ContentID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-                                <div class="modal-dialog modal-notice">
+                                <div class="modal-dialog modal-lg modal-notice">
                                     <div class="modal-content">
                                         <div class="modal-body" style="padding-left: 10px; padding-right: 10px;">
                                             <div class="instruction">
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="card card-body card-plain">
-                                                            <iframe src="@Html.DisplayFor(modelItem => item.StreamURL)" id="content_@item.ContentID" frameborder="0" playsinline="false" allow="autoplay; fullscreen" webkitallowfullscreen mozallowfullscreen allowfullscreen style="max-width: none !important"></iframe>
+                                                            <iframe src="@Html.DisplayFor(modelItem => item.StreamURL)" id="content_@item.ContentID" frameborder="0" playsinline="false" allow="autoplay; fullscreen" webkitallowfullscreen mozallowfullscreen allowfullscreen style="height: 410px !important; max-width: none !important; max-height: none !important"></iframe>
                                                         </div>
                                                     </div>
                                                 </div>

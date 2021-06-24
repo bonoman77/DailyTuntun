@@ -138,8 +138,8 @@ namespace DailyTuntun.Models
         [Display(Name = "연락처")]
         public string Mobile { get; set; }
 
-        [Display(Name = "상담일 (MM/DD/YYYY)")]
-        [Required(ErrorMessage = "상담일을 입력하세요.")]
+        [Display(Name = "접수일 (MM/DD/YYYY)")]
+        [Required(ErrorMessage = "접수일을 입력하세요.")]
         public string ContactDate { get; set; }
 
         [Display(Name = "처리일 (MM/DD/YYYY)")]
@@ -188,5 +188,60 @@ namespace DailyTuntun.Models
     }
 
 
+    public class AdminStreamTitleModel
+    {
+        [Display(Name = "교재타이틀ID")]
+        public string ContentTitleID { get; set; }
+
+        [Display(Name = "그룹명")]
+        public string ContentGroupName { get; set; }
+
+        [Display(Name = "교재타이틀")]
+        public string ContentTitle { get; set; }
+
+        [Display(Name = "타이틀번호")]
+        public string TitleNum { get; set; }
+
+        [Display(Name = "영상수")]
+        public int TotalContentCnt { get; set; }
+
+        [Display(Name = "교재이미지URL")]
+        public string ContentImageURL { get; set; }
+
+        [Display(Name = "게시여부")]
+        public bool DisplayYn { get; set; }
+
+        [Display(Name = "사용여부")]
+        public bool UseYn { get; set; }
+    }
+
+    public class AdminStreamContentModel
+    {
+        [Display(Name = "컨텐츠ID")]
+        public int ContentID { get; set; }
+
+        [Display(Name = "컨텐츠타입")]
+        public string ContentType { get; set; }
+
+        [Display(Name = "순서")]
+        public int OrderNum { get; set; }
+
+        [Display(Name = "동영상URL")]
+        public string StreamURL { get; set; }
+    }
+
+    public class AdminStreamUpdateModel
+    {
+        [Display(Name = "컨텐츠ID")]
+        public int ContentID { get; set; }
+
+        [Display(Name = "동영상URL")]
+        public string StreamURL { get; set; }
+
+        [Display(Name = "신규동영상URL")]
+        public string NewStreamURL { get; set; }
+    }
 
 }
+
+

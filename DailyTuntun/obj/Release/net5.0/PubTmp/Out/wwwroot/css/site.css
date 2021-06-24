@@ -61,7 +61,6 @@ h5.description.text-dark-berry {
     font-family: NanumSquareRoundL;
 }
 
-
 .es {height:35px;}
 
 .motto a {
@@ -78,9 +77,21 @@ h3.title.text-dark {
     text-underline-position: auto;
 }
 
-
 h5.description.text-dark {
     text-shadow: 3px 3px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 }
 
+.embed-container {
+    position: relative; 
+    padding-bottom: 56.25%; 
+    height: 0;
+}
+.embed-container embed, .embed-container iframe {
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
 

@@ -28,7 +28,7 @@ namespace DailyTuntun.Models
         public int ContentGroupID { get; set; }
         public string ContentGroupImageURL { get; set; }
         public bool AuthYn { get; set; }
-        public bool UseYn { get; set; }
+        public bool DisplayYn { get; set; }
     }
 
     public class ProductContentModel
@@ -39,6 +39,7 @@ namespace DailyTuntun.Models
         public string StreamURL { get; set; }
         public string ImageURL { get; set; }
         public string CompleteImageURL { get; set; }
+        public string Coords { get; set; }
         public bool AuthYn { get; set; }
         public int ViewCnt { get; set; }
         public int OrderNum { get; set; }

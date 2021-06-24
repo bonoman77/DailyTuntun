@@ -142,6 +142,9 @@ D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\ass
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\character\7_character4.png
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\character\7_character5.png
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\character\7_character6.png
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\favicon.png
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\icon128x128.png
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\icon192x192.png
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\main\btn_big\index_btn_4.png
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\main\btn_big\index_btn_5.png
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\img\main\btn_big\index_btn_6.png

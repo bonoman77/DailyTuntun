@@ -446,3 +446,9 @@ D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Admin\Coun
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Admin\MemberCounselList.cshtml.g.cs
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Home\VersionHistory.cshtml.g.cs
 D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Product\ContentMapLIst.cshtml.g.cs
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Account\SearchMemberCodePartial.cshtml.g.cs
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Admin\StreamContentList.cshtml.g.cs
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Admin\StreamPartial.cshtml.g.cs
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Admin\StreamTitleList.cshtml.g.cs
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Admin\StreamUpdatePartial.cshtml.g.cs
+D:\Development\DailyTuntun\DailyTuntun\obj\Release\net5.0\Razor\Views\Admin\MemberRegister.cshtml.g.cs

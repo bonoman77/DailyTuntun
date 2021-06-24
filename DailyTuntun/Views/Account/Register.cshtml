@@ -143,11 +143,11 @@
 <script type="text/javascript">
 
     var memberSearch = function () {
-        $("#searchMemberModal").load("/Account/SearchMemberPartial",
+        $("#searchMemberModal").load("/Account/SearchMemberCodePartial",
             function () {
                 $("#myModal").modal("show");
                 $("#myModal").on('shown.bs.modal', function () {
-                    $("#Account").focus();
+                    $("#SearchCode").focus();
                 });
             }
         );

@@ -671,26 +671,45 @@ $(document).ready(function () {
 
 
 // AutoComplete TextBox 
-$(document).ready(function () {
-    $("search").autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                url: "/Product/ContentSearch",
-                type: "POST",
-                dataType: "json",
-                data: { Prefix: request.term },
-                success: function (data) {
-                    response($.map(data, function (item) {
-                        return { label: item.title, value: item.title };
-                    }))
-                }
-            })
-        },
-        message: {
-            noResult: "", result: ""
-        }
-    }); 
-});
+//$(document).ready(function () {
+//    $("search").autocomplete({
+//        source: function (request, response) {
+//            $.ajax({
+//                url: "/Product/ContentSearch",
+//                type: "POST",
+//                dataType: "json",
+//                data: { Prefix: request.term },
+//                success: function (data) {
+//                    response($.map(data, function (item) {
+//                        return { label: item.title, value: item.title };
+//                    }))
+//                }
+//            })
+//        },
+//        message: {
+//            noResult: "", result: ""
+//        }
+//    }); 
+//});
+
+// Trumbowyg Textarea 
+//$(".trumbo").trumbowyg({
+//    btns: [
+//        ['viewHTML'],
+//        ['undo', 'redo'], // Only supported in Blink browsers
+//        ['formatting'],
+//        ['strong', 'em', 'del'],
+//        ['superscript', 'subscript'],
+//        ['link'],
+//        ['insertImage'],
+//        ['uploadImage'],
+//        ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+//        ['unorderedList', 'orderedList'],
+//        ['horizontalRule'],
+//        ['removeformat'],
+//        ['fullscreen']
+//    ]
+//});
 
 $('textarea').each(function () {
     this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');

@@ -14,9 +14,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DailyTuntun.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
-
         [HttpGet]
         public IActionResult Index()
         {
@@ -24,11 +24,6 @@ namespace DailyTuntun.Controllers
 
             if (User.Identity.IsAuthenticated)
                 memberId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-            if (memberId == 0)
-            {
-                return RedirectToAction("LogIn", "Account", new { managerYn = true });
-            }
 
             DynamicParameters paramManager = new DynamicParameters();
             paramManager.Add("@MemberID", memberId);
@@ -49,11 +44,6 @@ namespace DailyTuntun.Controllers
 
             if (User.Identity.IsAuthenticated)
                 memberId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-            if (memberId == 0)
-            {
-                return RedirectToAction("LogIn", "Account", new { managerYn = true });
-            }
 
             DynamicParameters paramManager = new DynamicParameters();
             paramManager.Add("@MemberID", memberId);
@@ -152,11 +142,6 @@ namespace DailyTuntun.Controllers
             if (User.Identity.IsAuthenticated)
                 memberId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            if (memberId == 0)
-            {
-                return RedirectToAction("LogIn", "Account", new { managerYn = true });
-            }
-
             DynamicParameters paramManager = new DynamicParameters();
             paramManager.Add("@MemberID", memberId);
             var adminYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberAdminYn", paramManager);
@@ -204,11 +189,6 @@ namespace DailyTuntun.Controllers
             if (User.Identity.IsAuthenticated)
                 memId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            if (memId == 0)
-            {
-                return RedirectToAction("LogIn", "Account", new { managerYn = true });
-            }
-
             DynamicParameters paramManager = new DynamicParameters();
             paramManager.Add("@MemberID", memId);
             var adminYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberAdminYn", paramManager);
@@ -224,7 +204,6 @@ namespace DailyTuntun.Controllers
             param.Add("@MemberID", memberId);
             return View(DapperORM.ReturnList<AdminCounselModel>("uspGetDailyAdminMemberConsultList", param));
         }
-
 
         [HttpGet]
         public IActionResult CounselRegister(int memberId)
@@ -337,6 +316,141 @@ namespace DailyTuntun.Controllers
         }
 
         [HttpGet]
+        public IActionResult StreamTitleList()
+        {
+            int memId = 0;
+
+            if (User.Identity.IsAuthenticated)
+                memId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            DynamicParameters paramManager = new DynamicParameters();
+            paramManager.Add("@MemberID", memId);
+            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberAdminYn", paramManager);
+
+            if (adminYn != true)
+            {
+                return RedirectToAction("AdminAuthError", "Admin");
+            }
+
+            return View(DapperORM.ReturnList<AdminStreamTitleModel>("uspGetDailyAdminContentTitleList"));
+        }
+
+        [HttpPost]
+        public JsonResult StreamTitleDisplayUpdate(int contentTitleId, int displayYn)
+        {
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@ContentTitleID", contentTitleId);
+            param.Add("@DisplayYn", displayYn);
+            DapperORM.ExecuteWithoutReturn("uspSetDailyAdminContentTitleDisplayYn", param);
+
+            return Json(new { success = true, disYn = displayYn });
+        }
+
+
+        [HttpGet]
+        public IActionResult StreamContentList(int contentTitleId)
+        {
+            int memId = 0;
+
+            if (User.Identity.IsAuthenticated)
+                memId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            DynamicParameters paramManager = new DynamicParameters();
+            paramManager.Add("@MemberID", memId);
+            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberAdminYn", paramManager);
+
+            if (adminYn != true)
+            {
+                return RedirectToAction("AdminAuthError", "Admin");
+            }
+
+            DynamicParameters paramTitle = new DynamicParameters();
+            paramTitle.Add("@ContentTitleID", contentTitleId);
+            ViewData["ContentTitle"] = DapperORM.ExecuteReturn<String>("uspGetDailyAdminContentTitleInfo", paramTitle);
+
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@ContentTitleID", contentTitleId);
+            return View(DapperORM.ReturnList<AdminStreamContentModel>("uspGetDailyAdminContentStreamUrlList", param));
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public PartialViewResult StreamPartial(int contentId)
+        {
+            int memId = 0;
+
+            if (User.Identity.IsAuthenticated)
+                memId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (memId == 0)
+            {
+                return PartialView();
+            }
+
+            DynamicParameters paramManager = new DynamicParameters();
+            paramManager.Add("@MemberID", memId);
+            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberAdminYn", paramManager);
+
+            if (adminYn == true)
+            {
+                DynamicParameters paramStream = new DynamicParameters();
+                paramStream.Add("@ContentID", contentId);
+                ViewData["StreamURL"] = DapperORM.ExecuteReturn<String>("uspGetDailyAdminContentStreamInfo", paramStream);
+
+            }
+
+            return PartialView();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public PartialViewResult StreamUpdatePartial(int contentId)
+        {
+            int memId = 0;
+
+            if (User.Identity.IsAuthenticated)
+                memId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (memId == 0)
+            {
+                return PartialView();
+            }
+
+            DynamicParameters paramManager = new DynamicParameters();
+            paramManager.Add("@MemberID", memId);
+            var adminYn = DapperORM.ExecuteReturn<bool>("uspGetDailyMemberAdminYn", paramManager);
+
+            if (adminYn == true)
+            {
+
+                ViewData["ContentID"] = contentId;  
+
+                DynamicParameters paramStream = new DynamicParameters();
+                paramStream.Add("@ContentID", contentId);
+                ViewData["StreamURL"] = DapperORM.ExecuteReturn<String>("uspGetDailyAdminContentStreamInfo", paramStream);
+            }
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        public JsonResult StreamUpdatePartialCheck(AdminStreamUpdateModel model)
+        {
+            int memId = 0;
+
+            if (User.Identity.IsAuthenticated)
+                memId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@ContentID", model.ContentID);
+            param.Add("@MemberID", memId);
+            param.Add("@StreamURL", model.NewStreamURL);
+            DapperORM.ExecuteWithoutReturn("uspSetDailyAdminContentStreamUrlUpdate", param);
+
+            return Json(new { success = true });
+        }
+
+        [HttpGet]
         public IActionResult AdminAuthError()
         {
             return View();
@@ -438,7 +552,7 @@ namespace DailyTuntun.Controllers
             DapperORM.ExecuteWithoutReturn("uspSetDailyMemberOut", param);
 
             var result = true;
-            return Json(result);
+            return Json(new { success = result });
         }
 
 
@@ -446,54 +560,107 @@ namespace DailyTuntun.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> MemberLogIn(int memberId)
         {
-            if (ModelState.IsValid)
+            bool isValid = true;
+
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@MemberID", memberId);
+            var join = DapperORM.ReturnList<MemberLogInModel>("uspGetDailyAdminMemberLogIn", param).FirstOrDefault<MemberLogInModel>();
+
+            if (join == null)
+                isValid = false;
+
+            if (!isValid)
             {
-
-                var isValid = true;
-
-                DynamicParameters param = new DynamicParameters();
-                param.Add("@MemberID", memberId);
-                var join = DapperORM.ReturnList<MemberLogInModel>("uspGetDailyAdminMemberLogIn", param).FirstOrDefault<MemberLogInModel>();
-
-                if (join == null)
-                    isValid = false;
-
-                if (!isValid)
-                {
-                    ModelState.AddModelError("", "계정을 다시 확인해주세요.");
-                    return View();
-                }
-
-                if (join.AuthYn == false)
-                {
-                    ModelState.AddModelError("", string.Format("앞서 등록하신 {0} 을 확인하고 먼저 인증을 해주세요.", join.UserEmail));
-                    return View();
-                }
-
-                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, join.MemberID.ToString()));
-                identity.AddClaim(new Claim(ClaimTypes.Name, join.MemberName));
-                identity.AddClaim(new Claim("MemberID", join.MemberID.ToString()));
-                identity.AddClaim(new Claim("ManagerYn", join.ManagerYn.ToString()));
-
-                // Authenticate using the identity
-                var principal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme
-                    , principal
-                    , new AuthenticationProperties
-                    {
-                        ExpiresUtc = DateTime.UtcNow.AddDays(3),
-                    });
-
-                return RedirectToAction("Index", "Home");
+                ModelState.AddModelError("", "계정을 다시 확인해주세요.");
+                return View();
             }
 
+            if (join.AuthYn == false)
+            {
+                ModelState.AddModelError("", string.Format("앞서 등록하신 {0} 을 확인하고 먼저 인증을 해주세요.", join.UserEmail));
+                return View();
+            }
+
+            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, join.MemberID.ToString()));
+            identity.AddClaim(new Claim(ClaimTypes.Name, join.MemberName));
+            identity.AddClaim(new Claim("MemberID", join.MemberID.ToString()));
+            identity.AddClaim(new Claim("ManagerYn", join.ManagerYn.ToString()));
+
+            // Authenticate using the identity
+            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme
+                , principal
+                , new AuthenticationProperties
+                {
+                    ExpiresUtc = DateTime.UtcNow.AddDays(3),
+                });
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult MemberRegister(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult MemberRegister(MemberRegisterModel model)
+        {
+            int adminMemberId = 0;
 
+            if (User.Identity.IsAuthenticated)
+                adminMemberId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    CommonController Common = new CommonController();
+                    string authCode = Common.GenerateRandomPassword();
+
+                    DynamicParameters param = new DynamicParameters();
+
+                    param.Add("@AdminMemberID", adminMemberId);
+                    param.Add("@UserEmail", model.UserEmail);
+                    param.Add("@UserPassword", model.UserPassword);
+                    param.Add("@MemberCode", model.MemberCode);
+                    param.Add("@MemberName", model.MemberName);
+                    param.Add("@CorpName", model.CorpName);
+                    param.Add("@ManagerYn", 0);
+                    var returnVal = DapperORM.ExecuteReturn<int>("uspSetDailyAdminMemberInsert", param);
+
+                    if (returnVal == 1)
+                    {
+                        return RedirectToAction("MemberList", "Admin");
+                    }
+                    else
+                    {
+                        if (returnVal == 0)
+                            ModelState.AddModelError("", "유치원코드가 정확하지 않습니다.");
+                        else if (returnVal == 2)
+                            ModelState.AddModelError("", "이미 사용중인 이메일입니다.");
+                        else if (returnVal == 3)
+                            ModelState.AddModelError("", "이미 사용중인 유치원코드입니다.");
+                        else if (returnVal == 4)
+                            ModelState.AddModelError("", "유치원코드 혹은 유치원명이 잘못되었습니다.");
+
+                        return View(model);
+                    }
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "회원 가입에 실패하였습니다. 고객센터에 문의하세요.");
+                    return View(model);
+                }
+            }
+            return View(model);
+        }
 
     }
 }

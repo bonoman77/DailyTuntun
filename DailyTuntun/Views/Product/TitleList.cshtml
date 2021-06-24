@@ -92,19 +92,28 @@
                                 <div class="card card-product card-plain text-center">
                                     <div class="card-image">
 
-                                        @if (memberId == 0 || authYn == true)
+                                        @if (item.DisplayYn == true)
                                         {
+                                            @*@if (memberId == 0 || authYn == true)
+                                                {
+                                                    <a href="@Url.Action("ContentMapList", "Product", new { productKindId = item.ProductKindID, contentTitleId = item.ContentTitleID })">
+                                                        <img src="@Html.DisplayFor(modelItem => item.ContentImageURL)" alt="Rounded Image" class="img-thumbnail img-no-padding img-responsive">
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="" data-toggle="modal" data-target="#noticeModal">
+                                                        <img src="@Html.DisplayFor(modelItem => item.ContentImageURL)" alt="Rounded Image" class="img-thumbnail img-no-padding img-responsive">
+                                                    </a>
+                                                }*@
                                             <a href="@Url.Action("ContentMapList", "Product", new { productKindId = item.ProductKindID, contentTitleId = item.ContentTitleID })">
                                                 <img src="@Html.DisplayFor(modelItem => item.ContentImageURL)" alt="Rounded Image" class="img-thumbnail img-no-padding img-responsive">
                                             </a>
                                         }
                                         else
                                         {
-                                            <a href="" data-toggle="modal" data-target="#noticeModal">
-                                                <img src="@Html.DisplayFor(modelItem => item.ContentImageURL)" alt="Rounded Image" class="img-thumbnail img-no-padding img-responsive">
-                                            </a>
+                                            <img src="@Html.DisplayFor(modelItem => item.ContentImageURL)" alt="Rounded Image" class="img-thumbnail img-no-padding img-responsive" style="filter: grayscale(100%);">
                                         }
-
                                         <div class="card-body">
                                             <div class="card-description">
                                                 <h5 class="card-title">@Html.DisplayFor(modelItem => item.ContentTitle)</h5>

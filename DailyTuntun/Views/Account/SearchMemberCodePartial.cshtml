@@ -1,0 +1,58 @@
+﻿@model DailyTuntun.Models.MemberSearchCodeModel
+
+<div class="modal-header no-border-header text-center">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+
+    <h3 class="modal-title text-center">프리스쿨 원코드 확인</h3>
+    <p>귀 원에 발급된 원코드를 입력하세요.</p>
+</div>
+
+<form name="searchform" id="searchform" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-controller="Account" asp-action="SearchMemberPartial">
+    @Html.HiddenFor(model => model.MemberName)
+    <div class="modal-body">
+        <div class="form-group">
+            <label asp-for="SearchCode" class="control-label">원코드</label>
+            <input asp-for="SearchCode" type="text" class="form-control border-input">
+            <span asp-validation-for="SearchCode" class="text-danger" id="checkAccount"></span>
+        </div>
+        <div class="form-group text-center">
+            <label id="searchResult" class="control-label text-danger"></label>
+        </div>
+        <input type="button" id="submit" value="확 인" class="btn btn-block btn-round" onclick="memberCheck()" />
+    </div>
+    <br />
+</form>
+
+<script type="text/javascript">
+    $("#Password").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#submit").click();
+        }
+    });
+
+    function memberCheck() {
+        var formData = $('#searchform').serialize()
+
+        $.ajax({
+            type: "POST",
+            url: "/Account/SearchMemberCodeCheck",
+            data: formData,
+            success: function (result) {
+                if (result.success == true) {
+                    $("#myModal").modal("hide");
+                    document.getElementById("MemberCode").value = result.memberCode;
+                    document.getElementById("CorpName").value = result.corpName;
+                } else {
+                    if (result.errorNum == 9) {
+                        document.getElementById("searchResult").innerHTML = "확인되지 않는 원코드입니다. 다시 확인해주세요.";
+                    } else if (result.errorNum == 8) {
+                        document.getElementById("searchResult").innerHTML = "이미 등록되어있는 원코드입니다. 다시 확인해주세요.";
+                    }
+                }
+
+            }
+        });
+    }
+</script>
